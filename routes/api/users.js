@@ -12,12 +12,42 @@ router.get('/', (req, res) => res.json({
   message: 'You are now at the user route'
 }))
 
+// Get Current User
+router.get('/current', passport.authenticate('jwt', { session: false }), 
+  (req, res) => {
+    res.json({
+      id: req.user.id,
+      email: req.user.email,
+      name: req.user.name,
+      emoji: req.user.emoji
+    })
+})
+
 // Registration & Login
 router.post('/submit', (req, res) => {
   User.findOne({ email: req.body.email })
     .then(user => {
       if (user) {
         //log the user in
+        const payload = {
+          id: user.id,
+          email: user.email,
+          name: user.name,
+          emoji: user.emoji
+        }
+        jwt.sign(
+          payload,
+          keys.secretOrKey,
+          {expiresIn: 36000},
+          (err, token) => {
+            res.json({
+              //welcome the user back
+              message: `Welcome back, ${user.name ? user.name : user.email}!`,
+              success: true,
+              token: 'Bearer ' + token
+            })
+          }
+        )
 
         //add user details if provided
         if (req.body.name) {
@@ -28,11 +58,7 @@ router.post('/submit', (req, res) => {
           user.emoji = req.body.emoji
           user.save()
         };
-
-        //welcome the user back
-        res.json({
-          message: `Welcome back, ${user.name ? user.name : user.email}!`
-        })
+    
       } else {
         //create a new user
         const newUser = new User({
