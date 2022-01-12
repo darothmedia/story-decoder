@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const Users = require('./User')
+const UserSchema = require('./User').schema
 
 const StorySchema = new Schema({
   writers: {
-    type: [Users],
+    type: [UserSchema],
     required: true
   },
   codedStory: {

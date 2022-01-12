@@ -7,12 +7,10 @@ const UserSchema = new Schema({
     required: true
   },
   name: {
-    type: String,
-    required: false
+    type: String
   },
   emoji: {
-    type: String,
-    required: false
+    type: String
   }
 }, {
   timestamps: true
