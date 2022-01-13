@@ -4,14 +4,15 @@ const UserSchema = require('./User').schema
 
 const StorySchema = new Schema({
   writers: {
-    type: [UserSchema],
-    required: true
+    type: Map
   },
   codedStory: {
-    type: String,
-    required: true
+    type: String
   },
   decodedStory: {
+    type: String
+  },
+  storyID: {
     type: String,
     required: true
   }
