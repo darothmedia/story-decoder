@@ -5,8 +5,7 @@ const jwt = require('jsonwebtoken');
 const keys = require('../../config/keys')
 const passport = require('passport')
 
-// const validateRegisterInput = require('../../validations/register');
-// const validateLoginInput = require('../../validations/login');
+const validateSubmitInput = require('../../validation/submit');
 
 router.get('/', (req, res) => res.json({
   message: 'You are now at the user route'
@@ -25,6 +24,12 @@ router.get('/current', passport.authenticate('jwt', { session: false }),
 
 // Registration & Login
 router.post('/submit', (req, res) => {
+  const {errors, isValid} = validateSubmitInput(req.body);
+
+  if (!isValid) {
+    return res.status(400).json(errors)
+  };
+
   User.findOne({ email: req.body.email })
     .then(user => {
       if (user) {
