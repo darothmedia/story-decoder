@@ -1,9 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const Story = require('../../models/Story')
-const jwt = require('jsonwebtoken');
-const keys = require('../../config/keys')
-const passport = require('passport')
 
 
 router.get('/', (req, res) => res.json({
@@ -21,7 +18,7 @@ router.post('/create', (req, res) => {
         const newStory = new Story({
           writers: {
             creator: req.body.currentUser,
-            contributors: [] 
+            contributors: [req.body.currentUser] 
           },
           codedStory: "",
           decodedStory: "",
@@ -34,6 +31,24 @@ router.post('/create', (req, res) => {
             message: "Houston, we've got a problem",
             error: err
           }))
+      }
+    })
+})
+
+// Add to a story
+router.patch('/continue', (req, res) => {
+  Story.findOne({storyID: req.body.storyID})
+    .then (story => {
+      let authors = story.writers.contributors
+      if (!story) {
+        return res.status(404).json({ game: "Story not found!" })
+      } else {
+        if (!authors.includes(req.body.currentUser)) {
+          authors.push(req.body.currentUser)
+        }
+        story.codedStory += req.body.emojis;
+        story.decodedStory += req.body.text;
+        story.save()
       }
     })
 })
