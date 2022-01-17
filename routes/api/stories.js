@@ -3,7 +3,7 @@ const router = express.Router();
 const Story = require('../../models/Story')
 
 
-router.get('/', (req, res) => res.json({
+router.get('/root', (req, res) => res.json({
   message: 'You are now at the story route'
 }));
 
@@ -36,24 +36,26 @@ router.post('/create', (req, res) => {
 })
 
 // Add to a story
-router.patch('/continue', (req, res) => {
+router.post('/continue', (req, res) => {
   Story.findOne({storyID: req.body.storyID})
     .then (story => {
       let authors = story.writers.contributors
       if (!story) {
         return res.status(404).json({ game: "Story not found!" })
-      } else {
-        if (!authors.includes(req.body.currentUser)) {
-          authors.push(req.body.currentUser)
-        }
-        story.codedStory += req.body.emojis;
-        story.decodedStory += req.body.text;
-        res.send({
-          updated: true
-        })
+      // } else {
+      //   if (!authors.includes(req.body.currentUser)) {
+      //     authors.push(req.body.currentUser)
+      //   }
+      //   // story.codedStory += req.body.emojis;
+      //   // story.decodedStory += req.body.text;
+      //   story.save()
+      //     then(updatedStory => res.json(updatedStory))
+      //     .catch(err => console.log(err))
       }
     })
+    .catch(err => res.status(400))
 })
+
 
 
 
