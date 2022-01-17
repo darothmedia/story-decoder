@@ -48,7 +48,9 @@ router.patch('/continue', (req, res) => {
         }
         story.codedStory += req.body.emojis;
         story.decodedStory += req.body.text;
-        story.save()
+        res.send({
+          updated: true
+        })
       }
     })
 })
