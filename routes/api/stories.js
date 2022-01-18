@@ -36,21 +36,25 @@ router.post('/create', (req, res) => {
 })
 
 // Add to a story
-router.post('/continue', (req, res) => {
+router.patch('/continue', (req, res) => {
   Story.findOne({storyID: req.body.storyID})
     .then (story => {
-      let authors = story.writers.contributors
       if (!story) {
         return res.status(404).json({ game: "Story not found!" })
-      // } else {
-      //   if (!authors.includes(req.body.currentUser)) {
-      //     authors.push(req.body.currentUser)
-      //   }
-      //   // story.codedStory += req.body.emojis;
-      //   // story.decodedStory += req.body.text;
-      //   story.save()
-      //     then(updatedStory => res.json(updatedStory))
-      //     .catch(err => console.log(err))
+      }
+      // res.send(story)
+      else {
+        // if (!story.writers.contributors.includes(req.body.currentUser)) {
+        //   story.writers.contributors.push({user: req.body.currentUser})
+        // }
+        // story.save()
+        // story.codedStory = req.body.emojis;
+        // story.decodedStory = req.body.text;
+        // story.save()
+        //   then(updatedStory => res.json(updatedStory))
+        //   .catch(err => console.log(err))
+        
+        res.send(story)
       }
     })
     .catch(err => res.status(400))
