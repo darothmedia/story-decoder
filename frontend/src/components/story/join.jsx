@@ -1,12 +1,23 @@
-import React from "react";
+import React, {useState} from "react";
 import { Link } from "react-router-dom";
 
 const JoinStory = props => {
+  const [storyID, setStoryID] = useState("")
+  const handleSubmit = e => {
+    e.preventDefault()
+    console.log(`submitted: ${storyID}`)
+  }
+
+  const handleChange = e => {
+    e.preventDefault()
+    setStoryID(e.target.value)
+  }
+
   return(
     <div className="wrapper" id="joinwrapper">
-      <form action="">
+      <form onSubmit={handleSubmit}>
         <label>Enter a Story Code:
-          <input type="text" />
+          <input onChange={handleChange} value={storyID} type="text" />
         </label>
       </form>
     
