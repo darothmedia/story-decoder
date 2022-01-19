@@ -1,12 +1,17 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const CreateStory = props => {
   return(
-    <form action="">
-      <label>Start with a title for your story!
-        <input type="text" />
-      </label>
-    </form>
+    <div class="wrapper" id="createwrapper">
+      <form action="">
+        <label>Start with a title for your story!
+          <input type="text" />
+        </label>
+      </form>
+
+      <Link to="/"><button>Home</button></Link>
+    </div>
   )
 }
 
