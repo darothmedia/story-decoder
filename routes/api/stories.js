@@ -27,14 +27,13 @@ router.post('/create', (req, res) => {
         return res.status(400).json({ game: "Duplicate Story Code" })
       } else {
         const newStory = new Story({
-          writers: {
-            creator: req.body.currentUser,
-            contributors: [req.body.currentUser] 
-          },
+          writers: [],
           codedStory: "",
           decodedStory: "",
           storyID: req.body.storyID
         })
+
+        newStory.writers.push(req.body.currentUser)
 
         newStory.save()
           .then(story => res.json(story))
@@ -54,15 +53,15 @@ router.patch('/:story_id/continue', (req, res) => {
         return res.status(404).json({ game: "Story not found!" })
       }
       else {
-        const authors = story.writers.contributors
-        // res.send(story.writers)
-        // if (!authors.includes(req.body.currentUserEmail)) {
-        //   authors.push(req.body.currentUserEmail)
-        //   story.save()
-        //     .then(updatedStory => res.json(updatedStory))
-        //     .catch(err => console.log(err))
-        // }
-        res.send(story.writers)
+        const authors = story.writers
+        if (!authors.includes(req.body.currentUser)) {
+          authors.push(req.body.currentUser)
+        }
+        story.codedStory += req.body.emojis
+        story.decodedStory += req.body.text
+        story.save()
+          .then(updatedStory => res.json(updatedStory))
+          .catch(err => console.log(err))
       }
     })
     .catch(err => res.status(400))

@@ -4,7 +4,7 @@ const UserSchema = require('./User').schema
 
 const StorySchema = new Schema({
   writers: {
-    type: Map
+    type: Array
   },
   codedStory: {
     type: String
