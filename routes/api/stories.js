@@ -67,7 +67,4 @@ router.patch('/:story_id/continue', (req, res) => {
     .catch(err => res.status(400))
 })
 
-
-
-
 module.exports = router

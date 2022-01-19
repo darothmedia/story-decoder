@@ -2,7 +2,7 @@
   "name": "story-decoder",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "root.jsx",
   "scripts": {
     "server": "nodemon --delay 500ms app.js",
     "server:debug": "nodemon --inspect app.js",
