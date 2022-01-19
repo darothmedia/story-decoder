@@ -3,9 +3,20 @@ const router = express.Router();
 const Story = require('../../models/Story')
 
 
-router.get('/root', (req, res) => res.json({
-  message: 'You are now at the story route'
-}));
+router.get('/', (req, res) => {
+  Story
+    .find()
+    .sort({date: -1})
+    .then(stories => res.json(stories))
+    .catch(err => res.status(400).json(err))
+});
+
+router.get('/:story_id', (req, res) => {
+  Story
+    .find({storyID: req.params.story_id})
+    .then(story => res.json(story))
+    .catch(err => res.status(400).json(err))
+})
 
 // Create a Story
 router.post('/create', (req, res) => {
@@ -36,25 +47,22 @@ router.post('/create', (req, res) => {
 })
 
 // Add to a story
-router.patch('/continue', (req, res) => {
-  Story.findOne({storyID: req.body.storyID})
+router.patch('/:story_id/continue', (req, res) => {
+  Story.findOne({storyID: req.params.story_id})
     .then (story => {
       if (!story) {
         return res.status(404).json({ game: "Story not found!" })
       }
-      // res.send(story)
       else {
-        // if (!story.writers.contributors.includes(req.body.currentUser)) {
-        //   story.writers.contributors.push({user: req.body.currentUser})
+        const authors = story.writers.contributors
+        // res.send(story.writers)
+        // if (!authors.includes(req.body.currentUserEmail)) {
+        //   authors.push(req.body.currentUserEmail)
+        //   story.save()
+        //     .then(updatedStory => res.json(updatedStory))
+        //     .catch(err => console.log(err))
         // }
-        // story.save()
-        // story.codedStory = req.body.emojis;
-        // story.decodedStory = req.body.text;
-        // story.save()
-        //   then(updatedStory => res.json(updatedStory))
-        //   .catch(err => console.log(err))
-        
-        res.send(story)
+        res.send(story.writers)
       }
     })
     .catch(err => res.status(400))
