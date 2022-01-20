@@ -1,5 +1,4 @@
 import React, {useState} from "react";
-import { findDOMNode } from "react-dom";
 import { Link } from "react-router-dom";
 
 const CreateStory = props => {
@@ -26,12 +25,10 @@ const CreateStory = props => {
     console.log(storyData.numWriters)
   }
 
-  const addWriter = e => {
-    e.preventDefault()
-    // setStoryData({...storyData, writers})
-  }
-
-  const maxWriters = 4
+  // const addWriter = e => {
+  //   e.preventDefault()
+  //   // setStoryData({...storyData, writers})
+  // }
 
   const writerFields = () => {
     let fields = []
