@@ -27,15 +27,15 @@ const CreateStory = props => {
   }
 
   const addWriter = e => {
-    // const writers = findDOMNode(writers)
-    // return writers.appendChild(newWriter)
+    e.preventDefault()
+    // setStoryData({...storyData, writers})
   }
 
   const maxWriters = 4
 
   const writerFields = () => {
     let fields = []
-    for(let i=0;i<maxWriters;i++){
+    for(let i=0;i<storyData.numWriters;i++){
       fields.push(React.createElement('input', { id: 'writerfield', key: `field${i}`}))
     }
     return fields
@@ -49,13 +49,12 @@ const CreateStory = props => {
         </label>
         <div id='writers'>
           <label>Number of Writers:
-            <input type="number" min='1' max='10' onChange={numChange} value='numwriters'/>
+            <input type="number" min='1' max='10' onChange={numChange} value={storyData.numWriters}/>
           </label>
           <label>
             Writers:
             {writerFields()}
           </label>
-        <button onClick={addWriter}>Add Writer</button>
         </div>
         <button onClick={handleSubmit}>Submit</button>
       </form>
