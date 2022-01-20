@@ -1,7 +1,16 @@
 label {
   display: block;
+  margin-bottom: 10px;
 }
 
 input {
   display: block;
+  margin: 0 auto;
 }
+
+#formwrapper {
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+}
+

@@ -14,7 +14,7 @@ const JoinStory = props => {
   }
 
   return(
-    <div className="wrapper" id="joinwrapper">
+    <div className="wrapper" id="formwrapper">
       <form onSubmit={handleSubmit}>
         <label>Enter a Story Code:
           <input onChange={handleChange} value={storyID} type="text" />

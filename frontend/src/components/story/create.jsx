@@ -25,31 +25,35 @@ const CreateStory = props => {
     console.log(storyData.numWriters)
   }
 
-  // const addWriter = e => {
-  //   e.preventDefault()
-  //   // setStoryData({...storyData, writers})
-  // }
-
   const writerFields = () => {
     let fields = []
-    for(let i=0;i<storyData.numWriters;i++){
+    for(let i=0;i<storyData.numWriters - 1;i++){
       fields.push(React.createElement('input', { id: 'writerfield', key: `field${i}`}))
     }
     return fields
   }
 
   return(
-    <div className="wrapper" id="createwrapper">
+    <div className="wrapper" id="formwrapper">
       <form>
-        <label>Start with a title for your story:
+        <h2>Story Info</h2>
+        <label>Title:
           <input type="text" onChange={titleChange} />
         </label>
         <div id='writers'>
           <label>Number of Writers:
-            <input type="number" min='1' max='10' onChange={numChange} value={storyData.numWriters}/>
+            <input 
+              type="number" 
+              min='1' 
+              max='10' 
+              onChange={numChange} 
+              value={storyData.numWriters}
+            />
           </label>
+          <h2>Writers</h2>
+          <p>Creator: You</p>
           <label>
-            Writers:
+            {storyData.numWriters > 1 ? "Contributors:" : ""}
             {writerFields()}
           </label>
         </div>
