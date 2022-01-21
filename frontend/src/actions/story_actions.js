@@ -19,6 +19,8 @@ export const createStory = story => dispatch => StoryUtil.createStory(story)
   );
 
 export const findStory = storyID => dispatch => StoryUtil.findStory(storyID)
-  .then(payload => dispatch(receiveStory(payload.data)),
-    errors => dispatch(receiveErrors(errors))
+  .then(payload => {
+    console.log("dispatched")
+    dispatch(receiveStory(payload.data))
+  },errors => dispatch(receiveErrors(errors))
   );
