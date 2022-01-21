@@ -4,23 +4,24 @@ import { Link } from "react-router-dom";
 const CreateStory = props => {
   const [storyData, setStoryData] = useState({
     title: "",
-    numWriters: 1
+    numWriters: 1,
+    writers: []
   })
-  const [writers, setWriters] = useState([])
 
   const handleSubmit = e => {
     e.preventDefault()
+    for (let i=0; i<storyData.numWriters - 1; i++){
+      let idx = `writer${i}`
+      storyData.writers.push(storyData[idx])
+      delete storyData[idx]
+    }
     console.log(`submitted: ${storyData.title}`)
+    console.log(storyData)
   }
 
   const handleChange = e => {
     e.preventDefault()
-    let key
-
-    if (e.target.type === "text") {key = "title"}
-    else {key = "numWriters"}
-
-    setStoryData({ ...storyData, [key]: e.target.value })
+    setStoryData({ ...storyData, [e.target.id]: e.target.value })
     console.log(storyData)
   }
 
@@ -29,8 +30,9 @@ const CreateStory = props => {
     for(let i=0; i<storyData.numWriters - 1; i++){
       fields.push(
         React.createElement('input', { 
-          id: 'writerfield', 
-          key: `field${i}`
+          id: `writer${i}`, 
+          key: `writer${i}`,
+          onChange: handleChange
         }))
     }
     return fields
@@ -41,15 +43,16 @@ const CreateStory = props => {
       <form>
         <h2>Story Info</h2>
         <label>Title:
-          <input type="text" onChange={handleChange} />
+          <input type="text" id='title' onChange={handleChange} />
         </label>
-        <div id='writers'>
+        <div id='writerwrapper'>
           <h2>Writers</h2>
           <label>Number of Writers:
             <input 
               type="number" 
               min='1' 
-              max='10' 
+              max='10'
+              id = 'numWriters' 
               onChange={handleChange} 
               value={storyData.numWriters}
             />
