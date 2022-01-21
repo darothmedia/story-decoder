@@ -16,10 +16,9 @@ const CreateStory = props => {
       storyData.writers.push(storyData[idx])
       delete storyData[idx]
     }
-    createStory(storyData)
-    
+    // createStory(storyData)
+    console.log(storyData)
     // console.log(`submitted: ${storyData.title}`)
-    // console.log(storyData)
   }
 
   const handleChange = e => {
