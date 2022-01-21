@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import { Link } from "react-router-dom";
+import { createStory } from '../../actions/story_actions'
 
 const CreateStory = props => {
   const [storyData, setStoryData] = useState({
@@ -15,6 +16,8 @@ const CreateStory = props => {
       storyData.writers.push(storyData[idx])
       delete storyData[idx]
     }
+    createStory(storyData)
+    
     // console.log(`submitted: ${storyData.title}`)
     // console.log(storyData)
   }
