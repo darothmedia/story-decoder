@@ -15,14 +15,14 @@ const CreateStory = props => {
       storyData.writers.push(storyData[idx])
       delete storyData[idx]
     }
-    console.log(`submitted: ${storyData.title}`)
-    console.log(storyData)
+    // console.log(`submitted: ${storyData.title}`)
+    // console.log(storyData)
   }
 
   const handleChange = e => {
     e.preventDefault()
     setStoryData({ ...storyData, [e.target.id]: e.target.value })
-    console.log(storyData)
+    // console.log(storyData)
   }
 
   const writerFields = () => {

@@ -22,7 +22,7 @@ mongoose.connect(db, { useNewUrlParser: true })
 // var routes = require('./routes/api/users')(passport)
 
 app.get('/', (req, res) => {
-  res.send('Hello a/A!');
+  res.send('Welcome to the Story Decoder backend!');
 });
 
 app.use(bodyParser.urlencoded({
