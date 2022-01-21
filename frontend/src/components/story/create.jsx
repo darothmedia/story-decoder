@@ -13,15 +13,20 @@ const CreateStory = props => {
     e.preventDefault()
     for (let i=0; i<storyData.numWriters - 1; i++){
       let idx = `writer${i}`
-      storyData.writers.push(storyData[idx])
+      if (storyData[idx]) {storyData.writers.push(storyData[idx])}
       delete storyData[idx]
     }
+    setStoryData({...storyData, numWriters: storyData.writers.length + 1})
     console.log(storyData)
   }
 
   const handleChange = e => {
     e.preventDefault()
-    setStoryData({ ...storyData, [e.target.id]: e.target.value })
+    if (e.target.type === "number") {
+      setStoryData({ ...storyData, [e.target.id]: parseInt(e.target.value) })
+    } else {
+      setStoryData({ ...storyData, [e.target.id]: e.target.value })
+    }
     // console.log(storyData)
   }
 
@@ -52,7 +57,7 @@ const CreateStory = props => {
               type="number" 
               min='1' 
               max='10'
-              id = 'numWriters' 
+              id ='numWriters' 
               onChange={handleChange} 
               value={storyData.numWriters}
             />
