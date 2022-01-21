@@ -1,10 +1,12 @@
 import React, {useState} from "react";
 import { Link } from "react-router-dom";
+import { findStory } from "../../util/story_api_util";
 
 const JoinStory = props => {
   const [storyID, setStoryID] = useState("")
   const handleSubmit = e => {
     e.preventDefault()
+    findStory(storyID)
     console.log(`submitted: ${storyID}`)
   }
 

@@ -5,5 +5,5 @@ export const createStory = storyData => (
 )
 
 export const findStory = storyID => (
-  axios.get(`/api/stories/${storyID}`)
+  axios.get(`http://localhost:7070/api/stories/${storyID}`)
 )
