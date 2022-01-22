@@ -1,6 +1,13 @@
 import React, {useState} from "react";
 import { Link } from "react-router-dom";
-// import { createStory } from '../../actions/story_actions'
+import { createStory } from '../../actions/story_actions'
+import { connect } from "react-redux";
+
+const mSTP = state => ({})
+
+const mDTP = dispatch => ({
+  submitStory: storyConfig => dispatch(createStory(storyConfig))
+})
 
 const CreateStory = props => {
   const [storyData, setStoryData] = useState({
@@ -16,7 +23,10 @@ const CreateStory = props => {
       if (storyData[idx]) {storyData.writers.push(storyData[idx])}
       delete storyData[idx]
     }
-    setStoryData({...storyData, numWriters: storyData.writers.length + 1})
+    setStoryData({...storyData, 
+      numWriters: storyData.writers.length + 1,
+      storyID: "XROPOD"})
+    props.submitStory(storyData)
     console.log(storyData)
   }
 
@@ -76,4 +86,4 @@ const CreateStory = props => {
   )
 }
 
-export default CreateStory
+export default connect(mSTP, mDTP)(CreateStory)
