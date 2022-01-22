@@ -1,19 +1,19 @@
 import React, {useState} from "react";
 import { Link } from "react-router-dom";
-import { findStory } from "../../actions/story_actions";
+import { findStory } from '../../actions/story_actions'
 import { connect } from 'react-redux'
 
 const mSTP = state => ({})
 
 const mDTP = dispatch => ({
-  findStory: storyID => dispatch(findStory(storyID))
+  findStoryByID: storyID => dispatch(findStory(storyID))
 })
 
 const JoinStory = props => {
   const [storyID, setStoryID] = useState("")
   const handleSubmit = e => {
     e.preventDefault()
-    findStory(storyID)
+    props.findStoryByID(storyID)
     console.log(`submitted: ${storyID}`)
   }
 
@@ -36,4 +36,5 @@ const JoinStory = props => {
   )
 }
 
+// export default JoinStory
 export default connect(mSTP, mDTP)(JoinStory)
