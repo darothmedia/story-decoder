@@ -84,7 +84,7 @@ const CreateStory = props => {
         <button onClick={handleSubmit}>Submit</button>
       </form>
       <br />
-      <Link to="/"><button>Home</button></Link>
+      Have a story code? <Link to="/join">Join a Story</Link>
     </div>
   )
 }

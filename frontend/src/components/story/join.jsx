@@ -11,6 +11,7 @@ const mDTP = dispatch => ({
 
 const JoinStory = props => {
   const [storyID, setStoryID] = useState("")
+  
   const handleSubmit = e => {
     e.preventDefault()
     props.findStoryByID(storyID)
@@ -28,9 +29,10 @@ const JoinStory = props => {
         <label>Enter a Story Code:
           <input onChange={handleChange} value={storyID} type="text" />
         </label>
+        <button onClick={handleSubmit}>Submit</button>
       </form>
-    
-      <Link to="/"><button>Home</button></Link>
+      <br />
+      Want to create a new story? <Link to="/create">Create a Story</Link>
     </div>
     
   )
