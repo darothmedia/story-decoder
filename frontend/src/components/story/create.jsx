@@ -9,11 +9,22 @@ const mDTP = dispatch => ({
   submitStory: storyConfig => dispatch(createStory(storyConfig))
 })
 
+const createID = length => {
+  let string = '';
+  let characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+  let caps = Array.from(characters)
+  for (let i=0; i<length; i++) {
+    string += caps[Math.floor(Math.random() * (characters.length - 1))]
+  }
+  return string
+}
+
 const CreateStory = props => {
   const [storyData, setStoryData] = useState({
     title: "",
     numWriters: 1,
-    writers: []
+    writers: [],
+    storyID: createID(5)
   })
 
   const handleSubmit = e => {
@@ -25,7 +36,7 @@ const CreateStory = props => {
     }
     setStoryData({...storyData, 
       numWriters: storyData.writers.length + 1,
-      storyID: "XROPOD"})
+      })
     props.submitStory(storyData)
     console.log(storyData)
   }
