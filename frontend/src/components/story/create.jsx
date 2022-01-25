@@ -1,8 +1,10 @@
 import React, {useState} from "react";
 import { Link } from "react-router-dom";
+import {Redirect} from "react-router"
 import { createStory } from '../../actions/story_actions'
 import { connect } from "react-redux";
 import { createID } from "../../util/code_util";
+import StoryInfo from "../../util/story_info";
 
 const mSTP = state => ({})
 
@@ -16,7 +18,8 @@ const CreateStory = props => {
     numWriters: 1,
     writers: [],
     storyID: createID(5),
-    currentUser: "You"
+    currentUser: "You",
+    submitted: false
   })
 
   const handleSubmit = e => {
@@ -26,10 +29,10 @@ const CreateStory = props => {
       if (storyData[idx]) {storyData.writers.push(storyData[idx])}
       delete storyData[idx]
     }
-    setStoryData({...storyData, 
-      numWriters: storyData.writers.length + 1,
-      })
     props.submitStory(storyData)
+    setStoryData({...storyData,
+      submitted: true
+      })
     console.log(storyData)
   }
 
@@ -40,7 +43,6 @@ const CreateStory = props => {
     } else {
       setStoryData({ ...storyData, [e.target.id]: e.target.value })
     }
-    // console.log(storyData)
   }
 
   const writerFields = () => {
@@ -58,6 +60,9 @@ const CreateStory = props => {
 
   return(
     <div className="wrapper" id="formwrapper">
+      {storyData.submitted ? 
+      StoryInfo(storyData) :
+      (<div>
       <form>
         <h2>Story Info</h2>
         <label>Title:
@@ -83,8 +88,11 @@ const CreateStory = props => {
         </div>
         <button onClick={handleSubmit}>Submit</button>
       </form>
+      
       <br />
       Have a story code? <Link to="/join">Join a Story</Link>
+      </div>
+      )}
     </div>
   )
 }
