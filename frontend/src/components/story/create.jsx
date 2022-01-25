@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import { Link } from "react-router-dom";
 import { createStory } from '../../actions/story_actions'
 import { connect } from "react-redux";
+import { createID } from "../../util/code_util";
 
 const mSTP = state => ({})
 
@@ -9,22 +10,13 @@ const mDTP = dispatch => ({
   submitStory: storyConfig => dispatch(createStory(storyConfig))
 })
 
-const createID = length => {
-  let string = '';
-  let characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-  let caps = Array.from(characters)
-  for (let i=0; i<length; i++) {
-    string += caps[Math.floor(Math.random() * (characters.length - 1))]
-  }
-  return string
-}
-
 const CreateStory = props => {
   const [storyData, setStoryData] = useState({
     title: "",
     numWriters: 1,
     writers: [],
-    storyID: createID(5)
+    storyID: createID(5),
+    currentUser: "You"
   })
 
   const handleSubmit = e => {

@@ -27,10 +27,12 @@ router.post('/create', (req, res) => {
         return res.status(400).json({ game: "Duplicate Story Code" })
       } else {
         const newStory = new Story({
-          writers: [],
+          writers: req.body.writers,
           codedStory: "",
           decodedStory: "",
-          storyID: req.body.storyID
+          storyID: req.body.storyID,
+          title: req.body.title,
+          creator: req.body.currentUser
         })
 
         newStory.writers.push(req.body.currentUser)

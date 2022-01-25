@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const UserSchema = require('./User').schema
 
 const StorySchema = new Schema({
   writers: {
@@ -15,6 +14,12 @@ const StorySchema = new Schema({
   storyID: {
     type: String,
     required: true
+  },
+  title: {
+    type: String
+  },
+  creator: {
+    type: String
   }
 })
 
