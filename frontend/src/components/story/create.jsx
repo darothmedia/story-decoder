@@ -6,7 +6,10 @@ import { createID } from "../../util/code_util";
 import StoryInfo from "../../util/story_info";
 import SessionForm from "../session/session_form";
 
-const mSTP = state => ({})
+const mSTP = state => ({
+  signedIn: state.session.isSignedIn,
+  currentUser: state.session.currentUser
+})
 
 const mDTP = dispatch => ({
   submitStory: storyConfig => dispatch(createStory(storyConfig))
@@ -18,7 +21,7 @@ const CreateStory = props => {
     numWriters: 1,
     writers: [],
     storyID: createID(5),
-    currentUser: null,
+    currentUser: props.currentUser.email,
     submitted: false,
     contact: false
   })
@@ -59,7 +62,7 @@ const CreateStory = props => {
     return fields
   }
 
-  if (!storyData.contact) {
+  if (!props.signedIn) {
     return(
       <SessionForm
         storyData={storyData}

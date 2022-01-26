@@ -2,27 +2,26 @@ import React, { useState } from "react";
 import { connect } from "react-redux";
 import { submit } from "../../actions/session_actions";
 
-const mSTP = state => ({})
+const mSTP = state => ({
+  signedIn: state.session.isSignedIn
+})
 const mDTP = dispatch => ({
   submitUser: user => dispatch(submit(user))
 })
 
 const SessionForm = props => {
-  const [contact, setContact] = useState("")
+  const [userData, setUserData] = useState({
+    email: null
+  })
 
   const handleChange = e => {
     e.preventDefault()
-    setContact(e.target.value)
+    setUserData({...userData, email: e.target.value})
   }
 
   const handleSubmit = e => {
     e.preventDefault()
-    props.submitUser(contact)
-    props.setStoryData({...props.storyData, 
-      currentUser: contact,
-      contact: true
-    })
-    console.log(props.storyData)
+    props.submitUser(userData)
   }
 
   return(
