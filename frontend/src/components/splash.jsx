@@ -6,7 +6,7 @@ const Splash = props => {
     <div className="wrapper" id='splashwrapper'>
       <h1>Story Decoder</h1>
       <Link to='/create'><button>Create A Story</button></Link>
-      <Link to='/join'><button>Enter Story Code</button></Link>
+      <Link to='/join'><button>Continue A Story</button></Link>
     </div>
   )
 }
