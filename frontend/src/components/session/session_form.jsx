@@ -12,12 +12,13 @@ const mDTP = dispatch => ({
 
 const SessionForm = props => {
   const [userData, setUserData] = useState({
-    email: null
+    email: null,
+    existing: null
   })
 
   const handleChange = e => {
     e.preventDefault()
-    setUserData({...userData, [e.target.id]: e.target.value})
+    setUserData({...userData, [e.target.className]: e.target.value})
   }
 
   const handleSubmit = e => {
@@ -26,16 +27,37 @@ const SessionForm = props => {
     console.log(userData)
   }
 
+  const handleClick = e => {
+    e.preventDefault()
+    if (e.target.id === 'new') {
+      setUserData({...userData, existing: false})
+    } else if (e.target.id === 'existing') {
+      setUserData({ ...userData, existing: true })
+    }
+  }
+
   return(
     <div className="wrapper" id="formwrapper">
+      <h1>Let's get started!</h1>
+      <div id='buttonwrapper'>
+        <button id='new' onClick={handleClick}>I'm new</button>
+        <button id='existing' onClick={handleClick}>I've been here before</button>
+      </div>
       <form onSubmit={handleSubmit}>
-        <label>Enter your email:
-          <input type="text" onChange={handleChange} id="email" />
-        </label>
-        <label>What's your name?
-          <input type="text" onChange={handleChange} id="name" />
-        </label>
-        <button onClick={handleSubmit}>Submit</button>
+        {userData.existing !== null ? <label>Enter your email:
+          <input type="text" onChange={handleChange} className="email" />
+        </label> : null}
+        {userData.existing === false ? 
+          <div>
+            <label>What's your name?
+              <input type="text" onChange={handleChange} className="name" />
+            </label>
+            <label>Pick an Emoji that describes you:
+              <input type="radio" onChange={handleChange} className="emoji" id=":)" value=":)" />
+            </label>
+          </div> : null}
+        {userData.existing !== null ?
+          <button onClick={handleSubmit}>Submit</button> : null}
       </form>
     </div>
   )

@@ -3,6 +3,7 @@ import Splash from "./splash";
 import CreateStory from "./story/create";
 import JoinStory from "./story/join";
 import NavBar from "./navbar";
+import { AuthRoute, ProtectedRoute } from "../util/route_util";
 
 const App = () => (
   <div className="outerwrap">

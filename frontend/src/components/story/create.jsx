@@ -30,12 +30,12 @@ const CreateStory = props => {
 
   const handleSubmit = e => {
     e.preventDefault()
+    storyData.writers.push(props.currentUser.email)
     for (let i=0; i<storyData.numWriters - 1; i++){
       let idx = `writer${i}`
       if (storyData[idx]) {storyData.writers.push(storyData[idx])}
       delete storyData[idx]
     }
-    setStoryData({...storyData, currentUser: props.currentUser.email})
     props.submitStory(storyData)
     setStoryData({...storyData,
       submitted: true
