@@ -26,7 +26,7 @@ export const logout = () => dispatch => {
 };
 
 export const submit = user => dispatch => {
-  SessionAPIUtil.login(user)
+  SessionAPIUtil.submit(user)
     .then(res => {
       const { token } = res.data;
       localStorage.setItem('jwtToken', token);
