@@ -19,13 +19,13 @@ export const removeStories = () => ({
 })
 
 export const createStory = story => dispatch => StoryUtil.createStory(story)
-  .then(payload => dispatch(receiveStory(payload.data)), 
+  .then(story => dispatch(receiveStory(story.data)), 
     errors => dispatch(receiveErrors(errors))
   );
 
 export const findStory = storyID => dispatch => StoryUtil.findStory(storyID)
-  .then(payload => {
+  .then(story => {
     console.log("dispatched")
-    dispatch(receiveStory(payload.data))
+    dispatch(receiveStory(story.data))
   },errors => dispatch(receiveErrors(errors))
   );
