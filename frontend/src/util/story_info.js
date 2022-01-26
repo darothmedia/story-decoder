@@ -20,17 +20,9 @@ const StoryInfo = storyData => (
           {storyData.currentUser}
         </td>
       </tr>
-      <tr>
-        <td>
-          Writers:
-        </td>
-        <td>
-          {storyData.writers[0]}
-        </td>
-      </tr>
       {storyData.writers.map((writer, idx) => (
         <tr key={idx}>
-          <td></td>
+          <td>{idx === 0 ? "Writers:" : null}</td>
           <td>{writer}</td>
         </tr>
       ))}
