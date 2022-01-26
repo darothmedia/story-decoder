@@ -1,10 +1,10 @@
 import React, {useState} from "react";
 import { Link } from "react-router-dom";
-import {Redirect} from "react-router"
 import { createStory } from '../../actions/story_actions'
 import { connect } from "react-redux";
 import { createID } from "../../util/code_util";
 import StoryInfo from "../../util/story_info";
+import SessionForm from "../session/session_form";
 
 const mSTP = state => ({})
 
@@ -19,7 +19,8 @@ const CreateStory = props => {
     writers: [],
     storyID: createID(5),
     currentUser: "You",
-    submitted: false
+    submitted: false,
+    contact: false
   })
 
   const handleSubmit = e => {
@@ -60,8 +61,13 @@ const CreateStory = props => {
 
   return(
     <div className="wrapper" id="formwrapper">
-      {storyData.submitted ? 
-      StoryInfo(storyData) :
+      {!storyData.contact ? 
+      <SessionForm 
+        storyData={storyData} 
+        setStoryData={setStoryData} /> :
+      
+      // {storyData.submitted ? 
+      // StoryInfo(storyData) :
       (<div>
       <form>
         <h2>Story Info</h2>
@@ -93,6 +99,7 @@ const CreateStory = props => {
       Have a story code? <Link to="/join">Join a Story</Link>
       </div>
       )}
+      {/* } */}
     </div>
   )
 }
