@@ -8,14 +8,17 @@ const SessionForm = props => {
   const [contact, setContact] = useState("")
 
   const handleChange = e => {
+    e.preventDefault()
     setContact(e.target.value)
   }
 
   const handleSubmit = e => {
+    e.preventDefault()
     props.setStoryData({...props.storyData, 
-      creator: contact,
+      currentUser: contact,
       contact: true
     })
+    console.log(props.storyData)
   }
 
   return(

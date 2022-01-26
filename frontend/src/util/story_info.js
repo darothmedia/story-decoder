@@ -1,5 +1,5 @@
 const StoryInfo = storyData => (
-  <div>
+  <div className="wrapper" id="infowrapper">
     <h1>Your Story:</h1>
     <h2>ID: {storyData.storyID}</h2>
     <table>

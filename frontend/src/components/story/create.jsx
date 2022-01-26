@@ -18,7 +18,7 @@ const CreateStory = props => {
     numWriters: 1,
     writers: [],
     storyID: createID(5),
-    currentUser: "You",
+    currentUser: null,
     submitted: false,
     contact: false
   })
@@ -59,49 +59,52 @@ const CreateStory = props => {
     return fields
   }
 
-  return(
-    <div className="wrapper" id="formwrapper">
-      {!storyData.contact ? 
-      <SessionForm 
-        storyData={storyData} 
-        setStoryData={setStoryData} /> :
-      
-      // {storyData.submitted ? 
-      // StoryInfo(storyData) :
-      (<div>
-      <form>
-        <h2>Story Info</h2>
-        <label>Title:
-          <input type="text" id='title' onChange={handleChange} />
-        </label>
-        <div id='writerwrapper'>
-          <h2>Writers</h2>
-          <label>Number of Writers:
-            <input 
-              type="number" 
-              min='1' 
-              max='10'
-              id ='numWriters' 
-              onChange={handleChange} 
-              value={storyData.numWriters}
-            />
+  if (!storyData.contact) {
+    return(
+      <SessionForm
+        storyData={storyData}
+        setStoryData={setStoryData} />
+    )
+  } else if (storyData.submitted) {
+    return(
+      StoryInfo(storyData)
+    )
+  } else {
+    return(
+      <div className="wrapper" id="formwrapper">
+        <div>
+        <form>
+          <h2>Story Info</h2>
+          <label>Title:
+            <input type="text" id='title' onChange={handleChange} />
           </label>
-          <p>Creator: You</p>
-          <label>
-            {storyData.numWriters > 1 ? "Contributors:" : ""}
-            {writerFields()}
-          </label>
+          <div id='writerwrapper'>
+            <h2>Writers</h2>
+            <label>Number of Writers:
+              <input 
+                type="number" 
+                min='1' 
+                max='10'
+                id ='numWriters' 
+                onChange={handleChange} 
+                value={storyData.numWriters}
+              />
+            </label>
+            <p>Creator: You</p>
+            <label>
+              {storyData.numWriters > 1 ? "Contributors:" : ""}
+              {writerFields()}
+            </label>
+          </div>
+          <button onClick={handleSubmit}>Submit</button>
+        </form>
+        
+        <br />
+        Have a story code? <Link to="/join">Join a Story</Link>
         </div>
-        <button onClick={handleSubmit}>Submit</button>
-      </form>
-      
-      <br />
-      Have a story code? <Link to="/join">Join a Story</Link>
       </div>
-      )}
-      {/* } */}
-    </div>
-  )
+    )
+  }
 }
 
 export default connect(mSTP, mDTP)(CreateStory)
