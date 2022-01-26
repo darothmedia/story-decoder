@@ -25,7 +25,7 @@ export const logout = () => dispatch => {
   dispatch(logoutUser())
 };
 
-export const submit = user => dispatch => {
+export const login = user => dispatch => {
   SessionAPIUtil.submit(user)
     .then(res => {
       const { token } = res.data;

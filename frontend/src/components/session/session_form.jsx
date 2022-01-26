@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import { submit } from "../../actions/session_actions";
+import { login } from "../../actions/session_actions";
 
 const mSTP = state => ({
   signedIn: state.session.isSignedIn,
   currentUser: state.session.currentUser
 })
 const mDTP = dispatch => ({
-  submitUser: userData => dispatch(submit(userData))
+  submitUser: userData => dispatch(login(userData))
 })
 
 const SessionForm = props => {
