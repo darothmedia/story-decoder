@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import { Link } from "react-router-dom";
-import { createStory } from '../../actions/story_actions'
+import { createStory, removeStories } from '../../actions/story_actions'
 import { connect } from "react-redux";
 import { createID } from "../../util/code_util";
 import StoryInfo from "../../util/story_info";
@@ -8,11 +8,13 @@ import SessionForm from "../session/session_form";
 
 const mSTP = state => ({
   signedIn: state.session.isSignedIn,
-  currentUser: state.session.currentUser
+  currentUser: state.session.currentUser,
+  story: state.entities.stories[0]
 })
 
 const mDTP = dispatch => ({
-  submitStory: storyConfig => dispatch(createStory(storyConfig))
+  submitStory: storyConfig => dispatch(createStory(storyConfig)),
+  removeStories: () => dispatch(removeStories())
 })
 
 const CreateStory = props => {
@@ -21,7 +23,7 @@ const CreateStory = props => {
     numWriters: 1,
     writers: [],
     storyID: createID(5),
-    currentUser: props.currentUser.email,
+    currentUser: null,
     submitted: false,
     contact: false
   })
@@ -33,11 +35,12 @@ const CreateStory = props => {
       if (storyData[idx]) {storyData.writers.push(storyData[idx])}
       delete storyData[idx]
     }
+    setStoryData({...storyData, currentUser: props.currentUser.email})
     props.submitStory(storyData)
     setStoryData({...storyData,
       submitted: true
       })
-    console.log(storyData)
+    console.log(props.currentUser.email)
   }
 
   const handleChange = e => {
@@ -63,14 +66,15 @@ const CreateStory = props => {
   }
 
   if (!props.signedIn) {
+    {props.removeStories()}
     return(
       <SessionForm
         storyData={storyData}
         setStoryData={setStoryData} />
     )
-  } else if (storyData.submitted) {
+  } else if (props.story) {
     return(
-      StoryInfo(storyData)
+      StoryInfo(props.story)
     )
   } else {
     return(
