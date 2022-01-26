@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import { Link } from "react-router-dom";
 import { createStory, removeStories } from '../../actions/story_actions'
 import { connect } from "react-redux";
@@ -81,6 +81,7 @@ const CreateStory = props => {
       <div className="wrapper" id="formwrapper">
         <div>
         <form>
+          <h1>Hello, {props.currentUser.name}!</h1>
           <h2>Story Info</h2>
           <label>Title:
             <input type="text" id='title' onChange={handleChange} />
@@ -97,9 +98,9 @@ const CreateStory = props => {
                 value={storyData.numWriters}
               />
             </label>
-            <p>Creator: You</p>
+              <p>Writers:</p> 
+              {props.currentUser.email}
             <label>
-              {storyData.numWriters > 1 ? "Contributors:" : ""}
               {writerFields()}
             </label>
           </div>

@@ -17,20 +17,25 @@ const SessionForm = props => {
 
   const handleChange = e => {
     e.preventDefault()
-    setUserData({...userData, email: e.target.value})
+    setUserData({...userData, [e.target.id]: e.target.value})
   }
 
   const handleSubmit = e => {
     e.preventDefault()
     props.submitUser(userData)
+    console.log(userData)
   }
 
   return(
     <div className="wrapper" id="formwrapper">
       <form onSubmit={handleSubmit}>
         <label>Enter your email:
-          <input type="text" onChange={handleChange} />
+          <input type="text" onChange={handleChange} id="email" />
         </label>
+        <label>What's your name?
+          <input type="text" onChange={handleChange} id="name" />
+        </label>
+        <button onClick={handleSubmit}>Submit</button>
       </form>
     </div>
   )
