@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { login } from "../../actions/session_actions";
 
@@ -13,11 +13,12 @@ const mDTP = dispatch => ({
 const SessionForm = props => {
   const [userData, setUserData] = useState({
     email: null,
-    existing: null
+    existing: null,
+    emojis: []
   })
 
   const handleChange = e => {
-    e.preventDefault()
+    // e.preventDefault()
     setUserData({...userData, [e.target.className]: e.target.value})
   }
 
@@ -63,8 +64,30 @@ const SessionForm = props => {
     '26C4'
   ]
 
-  const emojiChoices = emojiList => {
-    
+  const emojiChoices = (emojiList) => {
+    let choices = []
+
+    while (userData.emojis.length < 5) {
+      let emojiIDX = Math.floor(Math.random() * (emojiList.length - 1))
+      if (!userData.emojis.includes(emojiList[emojiIDX])) {
+        userData.emojis.push(emojiList[emojiIDX])
+      }
+    }
+
+    return userData.emojis.map((choice, idx) => (
+      <>
+        <input
+          type="radio"
+          onChange={handleChange}
+          className="emoji"
+          id={choice}
+          value={printEmoji(choice)}
+          name="emoji" />
+        <label htmlFor={choice} key={idx} id='emojilabel'>
+          {printEmoji(choice)}
+        </label>
+      </>
+    ))
   }
 
   return(
@@ -83,9 +106,12 @@ const SessionForm = props => {
             <label>What's your name?
               <input type="text" onChange={handleChange} className="name" />
             </label>
-            <label>Pick an Emoji that describes you:
-              <input type="radio" onChange={handleChange} className="emoji" id=":)" value=":)" />
-            </label>
+            <h3>Pick an Emoji that describes you: </h3>
+            <div id='emojiwrapper'>
+              {emojiChoices(emojiList)}
+            </div>
+            
+            
           </div> : null}
         {userData.existing !== null ?
           <button onClick={handleSubmit}>Submit</button> : null}
