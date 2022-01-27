@@ -4,6 +4,7 @@ import jwt_decode from 'jwt-decode'
 export const RECEIVE_CURRENT_USER = 'RECEIVE_CURRENT_USER'
 export const LOGOUT = 'LOGOUT'
 export const RECEIVE_SESSION_ERRORS = 'RECEIVE_SESSION_ERRORS'
+export const CLEAR_ERRORS = 'CLEAR_ERRORS'
 
 export const logoutUser = () => ({
   type: LOGOUT
@@ -17,6 +18,10 @@ export const receiveCurrentUser = currentUser => ({
 export const receiveErrors = errors => ({
   type: RECEIVE_SESSION_ERRORS,
   errors
+})
+
+export const clearErrors = () => ({
+  type: CLEAR_ERRORS
 })
 
 export const logout = () => dispatch => {
@@ -35,7 +40,7 @@ export const login = user => dispatch => {
       dispatch(receiveCurrentUser(decoded))
     })
     .catch(err => {
-      dispatch(receiveErrors(err.message))
+      dispatch(receiveErrors(err.response.data))
     })
 }
 
@@ -49,6 +54,6 @@ export const signup = user => dispatch => {
       dispatch(receiveCurrentUser(decoded))
     })
     .catch(err => {
-      dispatch(receiveErrors(err.message))
+      dispatch(receiveErrors(err.response.data))
     })
 };

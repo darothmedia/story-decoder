@@ -2,14 +2,17 @@ import React, { useState, useEffect, useRef } from "react";
 import { connect } from "react-redux";
 import { login, signup } from "../../actions/session_actions";
 import { signUpEmojis, printEmoji } from "../../util/emoji_util";
+import { clearErrors } from "../../actions/session_actions";
 
 const mSTP = state => ({
   signedIn: state.session.isSignedIn,
-  currentUser: state.session.currentUser
+  currentUser: state.session.currentUser,
+  errors: state.errors.session
 })
 const mDTP = dispatch => ({
   submitUser: userData => dispatch(signup(userData)),
-  loginUser: userData => dispatch(login(userData))
+  loginUser: userData => dispatch(login(userData)),
+  clearErrors: () => dispatch(clearErrors())
 })
 
 const SessionForm = props => {
@@ -20,6 +23,15 @@ const SessionForm = props => {
 
   const signUpRef = useRef()
   const loginRef = useRef()
+  const emailField = useRef()
+
+  const signUpButton = () => {
+    if (props.errors.email === 'No account found for this email') {
+      return <button id='new' onClick={handleClick}>Sign Up</button>
+    } else if (userData.existing === true) {
+      return <button onClick={handleSubmit}>Submit</button>
+    }
+  }
 
   const handleChange = e => {
     setUserData({...userData, [e.target.className]: e.target.value})
@@ -32,7 +44,7 @@ const SessionForm = props => {
 
   const handleClick = e => {
     e.preventDefault()
-    e.target.focus()
+    props.clearErrors()
     if (e.target.id === 'new') {
       setUserData({...userData, existing: false})
       signUpRef.current.className = 'active'
@@ -42,6 +54,10 @@ const SessionForm = props => {
       loginRef.current.className = 'active'
       signUpRef.current.className = 'inactive'
     }
+    if (emailField.current) {
+      emailField.current.focus()
+    }
+    
   }
 
   const emojiChoices = (emojiList) => {
@@ -76,23 +92,22 @@ const SessionForm = props => {
         <button id='existing' onClick={handleClick} ref={loginRef}>I've been here before {printEmoji('1F481')}</button>
       </div>
       <form onSubmit={handleSubmit}>
-        {userData.existing !== null ? <label>Enter your email:
-          <input type="text" onChange={handleChange} className="email" />
-        </label> : null}
+        {userData.existing !== null ? 
+          <div>
+            <label>What's your email address?
+              <input type="text" onChange={handleChange} className="email" ref={emailField} autoFocus={true} />
+            </label>
+            <p className="errors">{props.errors.email}</p>
+            {signUpButton()} 
+          </div> : null}
         {userData.existing === false ? 
           <div>
-            <label>What's your name?
-              <input type="text" onChange={handleChange} className="name" />
-            </label>
-            <h3>Pick an Emoji that describes you: </h3>
+            <label>Pick an emoji that describes you: </label>
             <div id='emojiwrapper'>
               {emojiChoices(signUpEmojis)}
             </div>
-            
-            
+            <button onClick={handleSubmit}>Submit</button>
           </div> : null}
-        {userData.existing !== null ?
-          <button onClick={handleSubmit}>Submit</button> : null}
       </form>
     </div>
   )
