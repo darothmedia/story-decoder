@@ -36,12 +36,43 @@ const SessionForm = props => {
     }
   }
 
+  const printEmoji = code => String.fromCodePoint('0x' + code)
+
+  const emojiList = [
+    //Alien
+    '1F47D',
+    //Poop
+    '1F4A9',
+    //Crown 
+    '1F451',
+    //Sparkle Heart
+    '1F496',
+    //Dog
+    '1F436',
+    //Fox
+    '1F98A',
+    //Cat
+    '1F431',
+    //Unicorn
+    '1F984',
+    //Penguin
+    '1F427',
+    //Sun
+    '1F31E',
+    //Snowman
+    '26C4'
+  ]
+
+  const emojiChoices = emojiList => {
+    
+  }
+
   return(
     <div className="wrapper" id="formwrapper">
-      <h1>Let's get started!</h1>
+      <h1>Let's get started! {printEmoji('1F600')}</h1>
       <div id='buttonwrapper'>
-        <button id='new' onClick={handleClick}>I'm new</button>
-        <button id='existing' onClick={handleClick}>I've been here before</button>
+        <button id='new' onClick={handleClick}>I'm new {printEmoji('1F64B')}</button>
+        <button id='existing' onClick={handleClick}>I've been here before {printEmoji('1F481')}</button>
       </div>
       <form onSubmit={handleSubmit}>
         {userData.existing !== null ? <label>Enter your email:
