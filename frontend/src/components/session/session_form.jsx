@@ -94,7 +94,7 @@ const SessionForm = props => {
       <form onSubmit={handleSubmit}>
         {userData.existing !== null ? 
           <div>
-            <label>What's your email address?
+            <label><h3>What's your email address?</h3>
               <input type="text" onChange={handleChange} className="email" ref={emailField} autoFocus={true} />
             </label>
             <p className="errors">{props.errors.email}</p>
@@ -102,7 +102,7 @@ const SessionForm = props => {
           </div> : null}
         {userData.existing === false ? 
           <div>
-            <label>Pick an emoji that describes you: </label>
+            <label><h3>Pick an emoji that describes you: </h3></label>
             <div id='emojiwrapper'>
               {emojiChoices(signUpEmojis)}
             </div>

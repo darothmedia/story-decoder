@@ -81,7 +81,7 @@ const CreateStory = props => {
       <div className="wrapper" id="formwrapper">
         <div>
         <form>
-          <h1>Hello, {props.currentUser.name}!</h1>
+          <h1>Hello {props.currentUser.emoji}!</h1>
           <h2>Story Info</h2>
           <label>Title:
             <input type="text" id='title' onChange={handleChange} />
