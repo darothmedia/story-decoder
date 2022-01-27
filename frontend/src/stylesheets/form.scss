@@ -23,6 +23,10 @@ button {
   border-radius: 10px;
 }
 
+button.active {
+  background-color: rgb(206, 206, 206);
+}
+
 #emojilabel {
   cursor: pointer;
   padding: 5px;

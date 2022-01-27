@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { connect } from "react-redux";
 import { login, signup } from "../../actions/session_actions";
+import { signUpEmojis, printEmoji } from "../../util/emoji_util";
 
 const mSTP = state => ({
   signedIn: state.session.isSignedIn,
@@ -13,65 +14,37 @@ const mDTP = dispatch => ({
 
 const SessionForm = props => {
   const [userData, setUserData] = useState({
-    email: null,
     existing: null,
     emojis: []
   })
 
+  const signUpRef = useRef()
+  const loginRef = useRef()
+
   const handleChange = e => {
-    // e.preventDefault()
     setUserData({...userData, [e.target.className]: e.target.value})
   }
 
   const handleSubmit = e => {
     e.preventDefault()
-    if (userData.existing === true) {
-      props.loginUser(userData)
-    } else {
-      props.submitUser(userData)
-    }
-    console.log(userData)
+    userData.existing ? props.loginUser(userData) : props.submitUser(userData)
   }
 
   const handleClick = e => {
     e.preventDefault()
+    e.target.focus()
     if (e.target.id === 'new') {
       setUserData({...userData, existing: false})
+      signUpRef.current.className = 'active'
+      loginRef.current.className = 'inactive'
     } else if (e.target.id === 'existing') {
       setUserData({ ...userData, existing: true })
+      loginRef.current.className = 'active'
+      signUpRef.current.className = 'inactive'
     }
   }
 
-  const printEmoji = code => String.fromCodePoint('0x' + code)
-
-  const emojiList = [
-    //Alien
-    '1F47D',
-    //Poop
-    '1F4A9',
-    //Crown 
-    '1F451',
-    //Sparkle Heart
-    '1F496',
-    //Dog
-    '1F436',
-    //Fox
-    '1F98A',
-    //Cat
-    '1F431',
-    //Unicorn
-    '1F984',
-    //Penguin
-    '1F427',
-    //Sun
-    '1F31E',
-    //Snowman
-    '26C4'
-  ]
-
   const emojiChoices = (emojiList) => {
-    let choices = []
-
     while (userData.emojis.length < 5) {
       let emojiIDX = Math.floor(Math.random() * (emojiList.length - 1))
       if (!userData.emojis.includes(emojiList[emojiIDX])) {
@@ -99,8 +72,8 @@ const SessionForm = props => {
     <div className="wrapper" id="formwrapper">
       <h1>Let's get started! {printEmoji('1F600')}</h1>
       <div id='buttonwrapper'>
-        <button id='new' onClick={handleClick}>I'm new {printEmoji('1F64B')}</button>
-        <button id='existing' onClick={handleClick}>I've been here before {printEmoji('1F481')}</button>
+        <button id='new' onClick={handleClick} ref={signUpRef}>I'm new {printEmoji('1F64B')}</button>
+        <button id='existing' onClick={handleClick} ref={loginRef}>I've been here before {printEmoji('1F481')}</button>
       </div>
       <form onSubmit={handleSubmit}>
         {userData.existing !== null ? <label>Enter your email:
@@ -113,7 +86,7 @@ const SessionForm = props => {
             </label>
             <h3>Pick an Emoji that describes you: </h3>
             <div id='emojiwrapper'>
-              {emojiChoices(emojiList)}
+              {emojiChoices(signUpEmojis)}
             </div>
             
             
