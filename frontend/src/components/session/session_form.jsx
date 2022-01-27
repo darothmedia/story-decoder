@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { login } from "../../actions/session_actions";
+import { login, signup } from "../../actions/session_actions";
 
 const mSTP = state => ({
   signedIn: state.session.isSignedIn,
   currentUser: state.session.currentUser
 })
 const mDTP = dispatch => ({
-  submitUser: userData => dispatch(login(userData))
+  submitUser: userData => dispatch(signup(userData)),
+  loginUser: userData => dispatch(login(userData))
 })
 
 const SessionForm = props => {
@@ -24,7 +25,11 @@ const SessionForm = props => {
 
   const handleSubmit = e => {
     e.preventDefault()
-    props.submitUser(userData)
+    if (userData.existing === true) {
+      props.loginUser(userData)
+    } else {
+      props.submitUser(userData)
+    }
     console.log(userData)
   }
 
@@ -75,7 +80,7 @@ const SessionForm = props => {
     }
 
     return userData.emojis.map((choice, idx) => (
-      <>
+      <div key={idx}>
         <input
           type="radio"
           onChange={handleChange}
@@ -86,7 +91,7 @@ const SessionForm = props => {
         <label htmlFor={choice} key={idx} id='emojilabel'>
           {printEmoji(choice)}
         </label>
-      </>
+      </div>
     ))
   }
 

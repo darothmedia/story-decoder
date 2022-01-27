@@ -11,3 +11,7 @@ export const setAuthToken = token => {
 export const submit = (userData) => (
   axios.post('/api/users/submit', userData)
 )
+
+export const login = (user) => (
+  axios.post('/api/users/login', user)
+)

@@ -26,7 +26,7 @@ export const logout = () => dispatch => {
 };
 
 export const login = user => dispatch => {
-  SessionAPIUtil.submit(user)
+  SessionAPIUtil.login(user)
     .then(res => {
       const { token } = res.data;
       localStorage.setItem('jwtToken', token);
@@ -38,3 +38,17 @@ export const login = user => dispatch => {
       dispatch(receiveErrors(err.message))
     })
 }
+
+export const signup = user => dispatch => {
+  SessionAPIUtil.submit(user)
+    .then(res => {
+      const { token } = res.data;
+      localStorage.setItem('jwtToken', token);
+      SessionAPIUtil.setAuthToken(token);
+      const decoded = jwt_decode(token);
+      dispatch(receiveCurrentUser(decoded))
+    })
+    .catch(err => {
+      dispatch(receiveErrors(err.message))
+    })
+};
