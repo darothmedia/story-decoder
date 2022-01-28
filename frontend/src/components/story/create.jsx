@@ -8,8 +8,7 @@ import SessionForm from "../session/session_form";
 
 const mSTP = state => ({
   signedIn: state.session.isSignedIn,
-  currentUser: state.session.currentUser,
-  story: state.entities.stories[0]
+  currentUser: state.session.currentUser
 })
 
 const mDTP = dispatch => ({
@@ -23,9 +22,8 @@ const CreateStory = props => {
     numWriters: 1,
     writers: [],
     storyID: createID(5),
-    currentUser: null,
-    submitted: false,
-    contact: false
+    currentUser: "",
+    submitted: false
   })
 
   const handleSubmit = e => {
@@ -36,20 +34,19 @@ const CreateStory = props => {
       if (storyData[idx]) {storyData.writers.push(storyData[idx])}
       delete storyData[idx]
     }
+    console.log(storyData)
     props.submitStory(storyData)
-    setStoryData({...storyData,
-      submitted: true
-      })
-    console.log(props.currentUser.email)
   }
+
+  useEffect(() => {
+    setStoryData({...storyData, currentUser: props.currentUser.email})
+  }, [props.currentUser])
 
   const handleChange = e => {
     e.preventDefault()
-    if (e.target.type === "number") {
-      setStoryData({ ...storyData, [e.target.id]: parseInt(e.target.value) })
-    } else {
-      setStoryData({ ...storyData, [e.target.id]: e.target.value })
-    }
+    let value = e.target.value
+    if (e.target.type === "number") {value = parseInt(e.target.value)}
+    setStoryData({ ...storyData, [e.target.id]: value })
   }
 
   const writerFields = () => {
@@ -66,7 +63,7 @@ const CreateStory = props => {
   }
 
   if (!props.signedIn) {
-    {props.removeStories()}
+    props.removeStories()
     return(
       <SessionForm />
     )
