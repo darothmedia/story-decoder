@@ -35,8 +35,6 @@ router.post('/create', (req, res) => {
           creator: req.body.currentUser
         })
 
-        newStory.writers.push(req.body.currentUser)
-
         newStory.save()
           .then(story => res.json(story))
           .catch(err => res.status(400).json({

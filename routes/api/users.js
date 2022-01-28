@@ -23,6 +23,53 @@ router.get('/current', passport.authenticate('jwt', { session: false }),
 })
 
 // Registration & Login
+router.post('/login', (req, res) => {
+  const { errors, isValid } = validateSubmitInput(req.body);
+
+  if (!isValid) {
+    return res.status(400).json(errors)
+  };
+
+  User.findOne({ email: req.body.email })
+    .then(user => {
+      if (user) {
+        //log the user in
+        const payload = {
+          id: user.id,
+          email: user.email,
+          name: user.name,
+          emoji: user.emoji
+        }
+        jwt.sign(
+          payload,
+          keys.secretOrKey,
+          { expiresIn: 36000 },
+          (err, token) => {
+            res.json({
+              //welcome the user back
+              message: `Welcome back, ${user.name ? user.name : user.email}!`,
+              success: true,
+              token: 'Bearer ' + token
+            })
+          }
+        )
+
+        //add user details if provided
+        if (req.body.name) {
+          user.name = req.body.name
+          user.save()
+        };
+        if (req.body.emoji) {
+          user.emoji = req.body.emoji
+          user.save()
+        };
+
+      } else {
+        return res.status(404).json({email: 'No account found for this email'})
+      }
+    })
+})
+
 router.post('/submit', (req, res) => {
   const {errors, isValid} = validateSubmitInput(req.body);
 
@@ -72,8 +119,28 @@ router.post('/submit', (req, res) => {
           emoji: req.body.emoji
         });
         newUser.save()
-          .then(user => res.json(user))
-          .catch(err => console.log(err))
+          .then(user => {
+            const payload = {
+              id: user.id,
+              email: user.email,
+              name: user.name,
+              emoji: user.emoji
+            }
+            jwt.sign(
+              payload,
+              keys.secretOrKey,
+              { expiresIn: 36000 },
+              (err, token) => {
+                res.json({
+                  //welcome the user back
+                  message: `Welcome ${user.name ? user.name : user.email}!`,
+                  success: true,
+                  token: 'Bearer ' + token
+                })
+              }
+            )
+          })
+          .catch (err => console.log(err))
       }
     })
 })
