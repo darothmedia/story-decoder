@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { createStory, removeStories } from '../../actions/story_actions'
 import { connect } from "react-redux";
 import { createID } from "../../util/code_util";
@@ -68,9 +68,7 @@ const CreateStory = props => {
   if (!props.signedIn) {
     {props.removeStories()}
     return(
-      <SessionForm
-        storyData={storyData}
-        setStoryData={setStoryData} />
+      <SessionForm />
     )
   } else if (props.story) {
     return(

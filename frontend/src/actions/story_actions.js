@@ -25,7 +25,6 @@ export const createStory = story => dispatch => StoryUtil.createStory(story)
 
 export const findStory = storyID => dispatch => StoryUtil.findStory(storyID)
   .then(story => {
-    console.log("dispatched")
-    dispatch(receiveStory(story.data))
+    dispatch(receiveStory(story.data[0]))
   },errors => dispatch(receiveErrors(errors))
   );

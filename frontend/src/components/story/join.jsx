@@ -3,7 +3,9 @@ import { Link } from "react-router-dom";
 import { findStory } from '../../actions/story_actions'
 import { connect } from 'react-redux'
 
-const mSTP = state => ({})
+const mSTP = state => ({
+  stories: state.entities.stories
+})
 
 const mDTP = dispatch => ({
   findStoryByID: storyID => dispatch(findStory(storyID))

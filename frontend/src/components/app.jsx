@@ -3,6 +3,7 @@ import Splash from "./splash";
 import CreateStory from "./story/create";
 import JoinStory from "./story/join";
 import NavBar from "./navbar";
+import StoryInfoPage from "./story/story_info";
 import { AuthRoute, ProtectedRoute } from "../util/route_util";
 
 const App = () => (
@@ -13,6 +14,7 @@ const App = () => (
       <Route path='/' element={<Splash />} />
       <Route path='/create' element={<CreateStory />} />
       <Route path='/join' element={<JoinStory />} />
+      <Route path='/story/:storyId' element={<StoryInfoPage />} />
     </Routes>
   </div>
   </div>

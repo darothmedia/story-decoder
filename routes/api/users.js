@@ -46,24 +46,12 @@ router.post('/login', (req, res) => {
           { expiresIn: 36000 },
           (err, token) => {
             res.json({
-              //welcome the user back
-              message: `Welcome back, ${user.name ? user.name : user.email}!`,
+              message: `Login successful`,
               success: true,
               token: 'Bearer ' + token
             })
           }
         )
-
-        //add user details if provided
-        if (req.body.name) {
-          user.name = req.body.name
-          user.save()
-        };
-        if (req.body.emoji) {
-          user.emoji = req.body.emoji
-          user.save()
-        };
-
       } else {
         return res.status(404).json({email: 'No account found for this email'})
       }
@@ -81,6 +69,11 @@ router.post('/submit', (req, res) => {
     .then(user => {
       if (user) {
         //log the user in
+        if (req.body.emoji) {
+          user.emoji = req.body.emoji
+          user.save()
+        };
+
         const payload = {
           id: user.id,
           email: user.email,
@@ -100,17 +93,6 @@ router.post('/submit', (req, res) => {
             })
           }
         )
-
-        //add user details if provided
-        if (req.body.name) {
-          user.name = req.body.name
-          user.save()
-        };
-        if (req.body.emoji) {
-          user.emoji = req.body.emoji
-          user.save()
-        };
-    
       } else {
         //create a new user
         const newUser = new User({
