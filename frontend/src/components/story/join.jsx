@@ -1,5 +1,5 @@
-import React, {useState} from "react";
-import { Link } from "react-router-dom";
+import React, {useState, useEffect} from "react";
+import { Link, Navigate } from "react-router-dom";
 import { findStory } from '../../actions/story_actions'
 import { connect } from 'react-redux'
 
@@ -23,6 +23,12 @@ const JoinStory = props => {
   const handleChange = e => {
     e.preventDefault()
     setStoryID(e.target.value)
+  }
+
+  if (props.stories[storyID]) {
+    return(
+      <Navigate to={`/story/${storyID}`} />
+    )
   }
 
   return(

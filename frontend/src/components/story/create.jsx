@@ -72,7 +72,7 @@ const CreateStory = props => {
     )
   } else if (props.story) {
     return(
-      StoryInfo(props.story)
+      <Navigate to={`/story/${storyData.storyID}`} />
     )
   } else {
     return(

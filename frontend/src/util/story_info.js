@@ -1,7 +1,7 @@
 const StoryInfo = storyData => (
   <div className="wrapper" id="infowrapper">
     <h1>Your Story:</h1>
-    <h2>ID: {storyData.storyID}</h2>
+    {/* <h2>ID: {storyData.storyID}</h2> */}
     <table>
       <tbody>
       <tr>
