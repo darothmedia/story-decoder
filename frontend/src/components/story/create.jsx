@@ -3,7 +3,6 @@ import { Link, Navigate } from "react-router-dom";
 import { createStory, removeStories } from '../../actions/story_actions'
 import { connect } from "react-redux";
 import { createID } from "../../util/code_util";
-import StoryInfo from "../../util/story_info";
 import SessionForm from "../session/session_form";
 
 const mSTP = state => ({
@@ -40,6 +39,7 @@ const CreateStory = props => {
 
   useEffect(() => {
     setStoryData({...storyData, currentUser: props.currentUser.email})
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.currentUser])
 
   const handleChange = e => {
