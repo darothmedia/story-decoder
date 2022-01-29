@@ -1,7 +1,7 @@
 const StoryInfo = storyData => (
   <div className="wrapper" id="infowrapper">
     <h1>Your Story:</h1>
-    {/* <h2>ID: {storyData.storyID}</h2> */}
+    <h2>ID: {storyData.storyID}</h2>
     <table>
       <tbody>
       <tr>
@@ -9,7 +9,7 @@ const StoryInfo = storyData => (
           Title:
         </td>
         <td>
-          {storyData.title}
+          {storyData.title ? storyData.title : null}
         </td>
       </tr>
       <tr>
@@ -17,15 +17,15 @@ const StoryInfo = storyData => (
           Creator:
         </td>
         <td>
-          {storyData.currentUser}
+          {storyData.creator ? storyData.creator : null}
         </td>
       </tr>
-      {storyData.writers.map((writer, idx) => (
+      {storyData.writers ? storyData.writers.map((writer, idx) => (
         <tr key={idx}>
           <td>{idx === 0 ? "Writers:" : null}</td>
           <td>{writer}</td>
         </tr>
-      ))}
+      )) : null}
       </tbody>
     </table>
   </div>

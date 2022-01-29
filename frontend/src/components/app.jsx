@@ -5,18 +5,31 @@ import JoinStory from "./story/join";
 import NavBar from "./navbar";
 import StoryInfoPage from "./story/story_info";
 import { AuthRoute, ProtectedRoute } from "../util/route_util";
+import React, {useEffect} from "react";
+import { checkCurrent } from "../actions/session_actions";
+import { connect } from "react-redux";
 
-const App = () => (
-  <div className="outerwrap">
-    <NavBar />
-  <div className="bodywrap">
-    <Routes>
-      <Route path='/' element={<Splash />} />
-      <Route path='/create' element={<CreateStory />} />
-      <Route path='/join' element={<JoinStory />} />
-      <Route path='/story/:storyID' element={<StoryInfoPage />} />
-    </Routes>
-  </div>
-  </div>
-)
-export default App
+const mSTP = state => ({})
+const mDTP = dispatch => ({
+  userCheck: () => dispatch(checkCurrent())
+})
+
+const App = props => {
+  const {userCheck} = props
+  useEffect(() => {userCheck()}, [userCheck])
+  
+  return(
+    <div className="outerwrap">
+      <NavBar />
+      <div className="bodywrap">
+        <Routes>
+          <Route path='/' element={<Splash />} />
+          <Route path='/create' element={<CreateStory />} />
+          <Route path='/join' element={<JoinStory />} />
+          <Route path='/story/:storyID' element={<StoryInfoPage />} />
+        </Routes>
+      </div>
+    </div>
+  )
+}
+export default connect(mSTP, mDTP)(App)

@@ -14,7 +14,13 @@ router.get('/', (req, res) => {
 router.get('/:story_id', (req, res) => {
   Story
     .find({storyID: req.params.story_id})
-    .then(story => res.json(story))
+    .then(story => {
+      if(!story) {
+        return res.status(400).json({error: "No Story Found"})
+      } else {
+        return res.json(story)
+      }
+    })
     .catch(err => res.status(400).json(err))
 })
 
@@ -24,7 +30,7 @@ router.post('/create', (req, res) => {
   Story.findOne({storyID: req.body.storyID})
     .then(story => {
       if (story) {
-        return res.status(400).json({ game: "Duplicate Story Code" })
+        return res.status(400).json({ story: "Duplicate Story Code" })
       } else {
         const newStory = new Story({
           writers: req.body.writers,

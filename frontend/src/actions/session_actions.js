@@ -42,7 +42,7 @@ export const login = user => dispatch => {
     .catch(err => {
       dispatch(receiveErrors(err.response.data))
     })
-}
+};
 
 export const signup = user => dispatch => {
   SessionAPIUtil.submit(user)
@@ -57,3 +57,10 @@ export const signup = user => dispatch => {
       dispatch(receiveErrors(err.response.data))
     })
 };
+
+export const checkCurrent = () => dispatch => {
+  const jwt = localStorage.getItem('jwtToken')
+  if (jwt) {
+    dispatch(receiveCurrentUser(jwt_decode(jwt)))
+  }
+}

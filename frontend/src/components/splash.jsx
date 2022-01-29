@@ -2,6 +2,7 @@ import React, {useEffect} from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { removeStories } from "../actions/story_actions";
+import { checkCurrent } from "../actions/session_actions";
 
 const mSTP = state => ({})
 const mDTP = dispatch => ({
@@ -11,7 +12,9 @@ const mDTP = dispatch => ({
 
 const Splash = props => {
   const {removeStories} = props
-  useEffect(() => {removeStories()}, [removeStories])
+  useEffect(() => {
+    removeStories()
+  }, [removeStories])
 
   return(
     <div className="wrapper" id='splashwrapper'>
