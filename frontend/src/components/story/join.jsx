@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, {useState} from "react";
 import { Link, Navigate } from "react-router-dom";
 import { findStory } from '../../actions/story_actions'
 import { connect } from 'react-redux'
@@ -17,7 +17,6 @@ const JoinStory = props => {
   const handleSubmit = e => {
     e.preventDefault()
     props.findStoryByID(storyID)
-    console.log(`submitted: ${storyID}`)
   }
 
   const handleChange = e => {

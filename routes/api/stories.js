@@ -32,7 +32,7 @@ router.post('/create', (req, res) => {
           decodedStory: "",
           storyID: req.body.storyID,
           title: req.body.title,
-          creator: req.body.currentUser
+          creator: req.body.creator
         })
 
         newStory.save()

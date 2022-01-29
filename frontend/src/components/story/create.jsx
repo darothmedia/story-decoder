@@ -1,5 +1,5 @@
-import React, {useState, useEffect} from "react";
-import { Link, Navigate } from "react-router-dom";
+import React, {useState} from "react";
+import { Link } from "react-router-dom";
 import { createStory, removeStories } from '../../actions/story_actions'
 import { connect } from "react-redux";
 import { createID } from "../../util/code_util";
@@ -17,17 +17,15 @@ const mDTP = dispatch => ({
 
 const CreateStory = props => {
   const [storyData, setStoryData] = useState({
-    title: "",
     numWriters: 1,
-    writers: [],
-    storyID: createID(5),
-    currentUser: "",
-    submitted: false
+    writers: []
   })
 
   const handleSubmit = e => {
     e.preventDefault()
     storyData.writers.push(props.currentUser.email)
+    storyData.creator = props.currentUser.email
+    storyData.storyID = createID(5)
     for (let i=0; i<storyData.numWriters - 1; i++){
       let idx = `writer${i}`
       if (storyData[idx]) {storyData.writers.push(storyData[idx])}
@@ -36,11 +34,6 @@ const CreateStory = props => {
     console.log(storyData)
     props.submitStory(storyData)
   }
-
-  useEffect(() => {
-    setStoryData({...storyData, currentUser: props.currentUser.email})
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.currentUser])
 
   const handleChange = e => {
     e.preventDefault()
@@ -62,16 +55,19 @@ const CreateStory = props => {
     return fields
   }
 
-  if (!props.signedIn) {
+  if (!props.currentUser.email) {
     props.removeStories()
     return(
       <SessionForm />
     )
-  } else if (props.story) {
-    return(
-      <Navigate to={`/story/${storyData.storyID}`} />
-    )
-  } else {
+  } 
+  // else if (props.currentStory.storyID) {
+  //   const id = props.currentStory.storyID
+  //   return(
+  //     <Navigate to={`/story/${id}`} />
+  //   )
+  // } 
+  else {
     return(
       <div className="wrapper" id="formwrapper">
         <div>
