@@ -16,9 +16,14 @@ const NavBar = props => {
     let nav = []
     if (props.signedIn) {
       nav.push(
-        <button key='userEmoji'>{props.currentUser.emoji}</button>,
-        <button onClick={props.logout} key='logout'>Logout</button>
-      )};
+        <button key='userEmoji' id='emojibutton'>{props.currentUser.emoji}</button>,
+        <button onClick={props.logout} key='logout'>Log Out</button>
+      )
+    } else {
+      nav.push(
+        <Link to='/login' key='login'><button >Sign Up / Log In</button></Link>
+      )
+    };
     return nav
   }
 

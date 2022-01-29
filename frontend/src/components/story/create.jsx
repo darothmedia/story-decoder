@@ -55,7 +55,7 @@ const CreateStory = props => {
     return fields
   }
 
-  if (!props.currentUser.email) {
+  if (!props.signedIn) {
     props.removeStories()
     return(
       <SessionForm />

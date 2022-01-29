@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { login, signup } from "../../actions/session_actions";
 import { signUpEmojis, printEmoji } from "../../util/emoji_util";
 import { clearErrors } from "../../actions/session_actions";
+import { Navigate } from "react-router";
 
 const mSTP = state => ({
   signedIn: state.session.isSignedIn,
@@ -82,6 +83,12 @@ const SessionForm = props => {
         </label>
       </div>
     ))
+  }
+
+  if (props.signedIn) {
+    return(
+      <Navigate to="/create"/>
+    )
   }
 
   return(
