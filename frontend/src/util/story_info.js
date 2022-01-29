@@ -9,7 +9,7 @@ const StoryInfo = storyData => (
           Title:
         </td>
         <td>
-          {storyData.title ? storyData.title : null}
+          {storyData.title}
         </td>
       </tr>
       <tr>
@@ -17,15 +17,15 @@ const StoryInfo = storyData => (
           Creator:
         </td>
         <td>
-          {storyData.creator ? storyData.creator : null}
+          {storyData.creator}
         </td>
       </tr>
-      {storyData.writers ? storyData.writers.map((writer, idx) => (
+      {storyData.writers.map((writer, idx) => (
         <tr key={idx}>
           <td>{idx === 0 ? "Writers:" : null}</td>
           <td>{writer}</td>
         </tr>
-      )) : null}
+      ))}
       </tbody>
     </table>
   </div>
