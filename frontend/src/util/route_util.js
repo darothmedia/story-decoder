@@ -2,22 +2,22 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Route, Navigate } from 'react-router-dom';
 
-const Auth = ({ component: Component, path, loggedIn, exact }) => (
+const Auth = ({ element: Element, path, loggedIn, exact }) => (
   <Route path={path} exact={exact} render={(props) => (
     !loggedIn ? (
-      <Component {...props} />
+      <Element {...props} />
     ) : (
       <Navigate to="/" />
     )
   )} />
 );
 
-const Protected = ({ component: Component, loggedIn, ...rest }) => (
+const Protected = ({ element: Element, loggedIn, ...rest }) => (
   <Route
     {...rest}
     render={props =>
       loggedIn ? (
-        <Component {...props} />
+        <Element {...props} />
       ) : (
         <Navigate to="/login" />
       )

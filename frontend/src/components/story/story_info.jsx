@@ -1,11 +1,12 @@
 import React, {useEffect} from "react";
 import StoryInfo from "../../util/story_info";
 import { connect } from "react-redux";
-import { useParams } from "react-router";
+import { useParams, Navigate } from "react-router";
 import { findStory } from "../../actions/story_actions";
 
-const mSTP = (state, ownProps) => ({
-  currentStory: state.session.currentStory
+const mSTP = (state) => ({
+  currentStory: state.session.currentStory,
+  signedIn: state.session.isSignedIn
 })
 
 const mDTP = dispatch => ({
@@ -14,8 +15,12 @@ const mDTP = dispatch => ({
 
 const StoryInfoPage = props => {
   const params = useParams()
-  const {currentStory, findStory} = props
+  const {currentStory, findStory, signedIn} = props
   const {storyID} = params
+
+  // if (!signedIn) {
+  //   <Navigate to='/' />
+  // }
 
   useEffect(() => {
     if (!currentStory) {

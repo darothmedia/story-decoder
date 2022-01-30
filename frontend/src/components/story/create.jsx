@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { createStory, removeStories } from '../../actions/story_actions'
 import { connect } from "react-redux";
 import { createID } from "../../util/code_util";
@@ -7,7 +7,9 @@ import SessionForm from "../session/session_form";
 
 const mSTP = state => ({
   signedIn: state.session.isSignedIn,
-  currentUser: state.session.currentUser
+  currentUser: state.session.currentUser,
+  currentStory: state.session.currentStory,
+  stories: state.entities.stories
 })
 
 const mDTP = dispatch => ({
@@ -22,7 +24,6 @@ const CreateStory = props => {
   })
 
   const handleSubmit = e => {
-    e.preventDefault()
     storyData.writers.push(props.currentUser.email)
     storyData.creator = props.currentUser.email
     storyData.storyID = createID(5)
@@ -31,7 +32,6 @@ const CreateStory = props => {
       if (storyData[idx]) {storyData.writers.push(storyData[idx])}
       delete storyData[idx]
     }
-    console.log(storyData)
     props.submitStory(storyData)
   }
 
@@ -56,17 +56,15 @@ const CreateStory = props => {
   }
 
   if (!props.signedIn) {
-    props.removeStories()
     return(
       <SessionForm />
     )
   } 
-  // else if (props.currentStory.storyID) {
-  //   const id = props.currentStory.storyID
-  //   return(
-  //     <Navigate to={`/story/${id}`} />
-  //   )
-  // } 
+  else if (props.currentStory.storyID) {
+    return(
+      <Navigate to={`/story/${storyData.storyID}`} />
+    )
+  } 
   else {
     return(
       <div className="wrapper" id="formwrapper">
