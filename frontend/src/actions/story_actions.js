@@ -2,6 +2,7 @@ import * as StoryUtil from '../util/story_api_util'
 
 export const RECEIVE_STORY = 'RECEIVE_STORY'
 export const RECEIVE_ERRORS = 'RECEIVE ERRORS'
+export const CLEAR_ERRORS = 'CLEAR_ERRORS'
 export const REMOVE_STORIES = 'REMOVE_STORIES'
 
 export const receiveStory = story => ({
@@ -12,6 +13,10 @@ export const receiveStory = story => ({
 export const receiveErrors = errors => ({
   type: RECEIVE_ERRORS,
   errors
+})
+
+export const clearErrors = () => ({
+  type: CLEAR_ERRORS
 })
 
 export const removeStories = () => ({
@@ -26,5 +31,5 @@ export const createStory = story => dispatch => StoryUtil.createStory(story)
 export const findStory = storyID => dispatch => StoryUtil.findStory(storyID)
   .then(story => {
     dispatch(receiveStory(story.data[0]))
-  },errors => dispatch(receiveErrors(errors))
+  },errors => dispatch(receiveErrors(errors.response.data))
   );

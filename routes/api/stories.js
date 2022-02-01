@@ -13,15 +13,15 @@ router.get('/', (req, res) => {
 
 router.get('/:story_id', (req, res) => {
   Story
-    .find({storyID: req.params.story_id})
+    .findOne({storyID: req.params.story_id})
     .then(story => {
       if(!story) {
-        return res.status(400).json({error: "No Story Found"})
+        return res.status(404).json({story: "No Story Found"})
       } else {
         return res.json(story)
       }
     })
-    .catch(err => res.status(400).json(err))
+    .catch(err => res.status(400).json(err.response.data))
 })
 
 // Create a Story

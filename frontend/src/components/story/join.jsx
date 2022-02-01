@@ -4,7 +4,8 @@ import { findStory } from '../../actions/story_actions'
 import { connect } from 'react-redux'
 
 const mSTP = state => ({
-  stories: state.entities.stories
+  stories: state.entities.stories,
+  errors: state.errors.story
 })
 
 const mDTP = dispatch => ({
@@ -36,6 +37,7 @@ const JoinStory = props => {
         <label>Enter a Story Code:
           <input onChange={handleChange} value={storyID} type="text" />
         </label>
+        <p className="errors">{props.errors.story}</p>
         <button onClick={handleSubmit}>Submit</button>
       </form>
       <br />
