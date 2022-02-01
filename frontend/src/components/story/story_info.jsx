@@ -5,7 +5,7 @@ import { useParams, Navigate } from "react-router";
 import { findStory } from "../../actions/story_actions";
 
 const mSTP = (state) => ({
-  currentStory: state.session.currentStory,
+  currentStory: state.entities.stories.currentStory,
   signedIn: state.session.isSignedIn
 })
 
