@@ -1,7 +1,8 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import { Link, Navigate } from "react-router-dom";
 import { findStory } from '../../actions/story_actions'
 import { connect } from 'react-redux'
+import { clearErrors } from "../../actions/story_actions";
 
 const mSTP = state => ({
   stories: state.entities.stories,
@@ -9,11 +10,16 @@ const mSTP = state => ({
 })
 
 const mDTP = dispatch => ({
-  findStoryByID: storyID => dispatch(findStory(storyID))
+  findStoryByID: storyID => dispatch(findStory(storyID)),
+  clearErrors: () => dispatch(clearErrors())
 })
 
 const JoinStory = props => {
   const [storyID, setStoryID] = useState("")
+
+  useEffect(() => {
+    return props.clearErrors
+  }, [])
   
   const handleSubmit = e => {
     e.preventDefault()
