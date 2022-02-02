@@ -59,7 +59,6 @@ router.patch('/:story_id/continue', (req, res) => {
         return res.status(404).json({ game: "Story not found!" })
       }
       else {
-        console.log(req.body)
         story.codedStory.push(req.body.selected)
         // story.decodedStory += req.body.text
         story.save()

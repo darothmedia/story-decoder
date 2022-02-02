@@ -8,6 +8,6 @@ export const findStory = storyID => (
   axios.get(`/api/stories/${storyID}`)
 )
 
-export const editStory = story => (
-  axios.patch(`/api/stories/${story.storyID}/continue`)
+export const editStory = storyData => (
+  axios.patch(`/api/stories/${storyData.storyID}/continue`, storyData)
 )
