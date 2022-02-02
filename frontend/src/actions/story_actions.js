@@ -33,3 +33,9 @@ export const findStory = storyID => dispatch => StoryUtil.findStory(storyID)
     dispatch(receiveStory(story.data[0]))
   },errors => dispatch(receiveErrors(errors.response.data))
   );
+
+export const editStory = storyData => dispatch => StoryUtil.editStory(storyData)
+  .then(story => {
+    dispatch(receiveStory(story.data))
+  }, errors => dispatch(receiveErrors(errors.response.data))
+  );

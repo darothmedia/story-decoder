@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { connect } from "react-redux";
 import { login, signup } from "../../actions/session_actions";
-import { signUpEmojis, printEmoji } from "../../util/emoji_util";
+import { signUpEmojis, printEmoji, emojiChoices } from "../../util/emoji_util";
 import { clearErrors } from "../../actions/session_actions";
 import { Navigate } from "react-router";
 
@@ -10,6 +10,7 @@ const mSTP = state => ({
   currentUser: state.session.currentUser,
   errors: state.errors.session
 })
+
 const mDTP = dispatch => ({
   submitUser: userData => dispatch(signup(userData)),
   loginUser: userData => dispatch(login(userData)),
@@ -58,31 +59,6 @@ const SessionForm = props => {
     if (emailField.current) {
       emailField.current.focus()
     }
-    
-  }
-
-  const emojiChoices = (emojiList) => {
-    while (userData.emojis.length < 5) {
-      let emojiIDX = Math.floor(Math.random() * (emojiList.length - 1))
-      if (!userData.emojis.includes(emojiList[emojiIDX])) {
-        userData.emojis.push(emojiList[emojiIDX])
-      }
-    }
-
-    return userData.emojis.map((choice, idx) => (
-      <div key={idx}>
-        <input
-          type="radio"
-          onChange={handleChange}
-          className="emoji"
-          id={choice}
-          value={printEmoji(choice)}
-          name="emoji" />
-        <label htmlFor={choice} key={idx} id='emojilabel'>
-          {printEmoji(choice)}
-        </label>
-      </div>
-    ))
   }
 
   if (props.signedIn) {
@@ -111,7 +87,7 @@ const SessionForm = props => {
           <div>
             <label><h3>Pick an emoji that describes you: </h3></label>
             <div id='emojiwrapper'>
-              {emojiChoices(signUpEmojis)}
+              {emojiChoices(signUpEmojis, userData, handleChange)}
             </div>
             <button onClick={handleSubmit}>Submit</button>
           </div> : null}

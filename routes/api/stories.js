@@ -34,8 +34,8 @@ router.post('/create', (req, res) => {
       } else {
         const newStory = new Story({
           writers: req.body.writers,
-          codedStory: "",
-          decodedStory: "",
+          codedStory: [],
+          decodedStory: [],
           storyID: req.body.storyID,
           title: req.body.title,
           creator: req.body.creator
@@ -59,12 +59,9 @@ router.patch('/:story_id/continue', (req, res) => {
         return res.status(404).json({ game: "Story not found!" })
       }
       else {
-        const authors = story.writers
-        if (!authors.includes(req.body.currentUser)) {
-          authors.push(req.body.currentUser)
-        }
-        story.codedStory += req.body.emojis
-        story.decodedStory += req.body.text
+        console.log(req.body)
+        story.codedStory.push(req.body.selected)
+        // story.decodedStory += req.body.text
         story.save()
           .then(updatedStory => res.json(updatedStory))
           .catch(err => console.log(err))

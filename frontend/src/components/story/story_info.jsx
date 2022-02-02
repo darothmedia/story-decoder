@@ -1,10 +1,11 @@
 import React, {useEffect} from "react";
 import StoryInfo from "../../util/story_info";
 import { connect } from "react-redux";
-import { useParams, Navigate } from "react-router";
+import { useParams } from "react-router";
 import { findStory } from "../../actions/story_actions";
 import ContinueStory from "./continue";
 import StartStory from "./start";
+import { Link } from "react-router-dom";
 
 const mSTP = (state) => ({
   currentStory: state.entities.stories.currentStory,
@@ -30,14 +31,6 @@ const StoryInfoPage = props => {
     }
   }, [currentStory, findStory, storyID])
 
-  const handleClick = e => {
-    if (e.target.id === 'start') {
-      return(
-        <Navigate to={`/`} />
-      )
-    }
-  }
-
   if (!currentStory) {
     return null
   }
@@ -47,8 +40,12 @@ const StoryInfoPage = props => {
         <div>
           {StoryInfo(currentStory)} 
           {currentStory.codedStory.length === 0 ? 
-            <button onClick={handleClick} id='start'>Start</button>
-            : <button onClick={handleClick} id='continue'>Continue</button>
+            <Link to={`/story/${currentStory.storyID}/start`}>
+              <button id='start'>Start</button>
+            </Link>
+          : <Link to={`/story/${currentStory.storyID}/continue`}>
+              <button id='continue'>Continue</button>
+            </Link>
           }
         </div>
     </div>

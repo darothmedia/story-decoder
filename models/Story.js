@@ -6,10 +6,10 @@ const StorySchema = new Schema({
     type: Array
   },
   codedStory: {
-    type: String
+    type: Array
   },
   decodedStory: {
-    type: String
+    type: Array
   },
   storyID: {
     type: String,

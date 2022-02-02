@@ -24,3 +24,27 @@ export const signUpEmojis = [
   //Snowman
   '26C4'
 ]
+
+export const emojiChoices = (emojiList, componentData, handleChange) => {
+  while (componentData.emojis.length < 5) {
+    let emojiIDX = Math.floor(Math.random() * (emojiList.length - 1))
+    if (!componentData.emojis.includes(emojiList[emojiIDX])) {
+      componentData.emojis.push(emojiList[emojiIDX])
+    }
+  }
+
+  return componentData.emojis.map((choice, idx) => (
+    <div key={idx}>
+      <input
+        type="radio"
+        onChange={handleChange}
+        className="emoji"
+        id={choice}
+        value={printEmoji(choice)}
+        name="emoji" />
+      <label htmlFor={choice} key={idx} id='emojilabel'>
+        {printEmoji(choice)}
+      </label>
+    </div>
+  ))
+}
