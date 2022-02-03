@@ -16,7 +16,6 @@ const mDTP = dispatch => ({
 
 const StartStory = props => {
   const params = useParams()
-  console.log(params.storyID)
   const {editStory, currentStory, findStory} = props
   const {storyID} = params
   const [codedStory, setCodedStory] = useState({
@@ -37,7 +36,6 @@ const StartStory = props => {
 
   const handleSubmit = e => {
     e.preventDefault()
-    console.log(codedStory)
     editStory(codedStory)
   }
 
