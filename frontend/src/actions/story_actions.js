@@ -30,7 +30,7 @@ export const createStory = story => dispatch => StoryUtil.createStory(story)
 
 export const findStory = storyID => dispatch => StoryUtil.findStory(storyID)
   .then(story => {
-    dispatch(receiveStory(story.data[0]))
+    dispatch(receiveStory(story.data))
   },errors => dispatch(receiveErrors(errors.response.data))
   );
 
