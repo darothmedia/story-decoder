@@ -47,7 +47,7 @@ const StartStory = props => {
     <div className="wrapper" id='startwrapper'>
       <h1>LETS BEGIN</h1>
       <p>Our story begins, like many other stories, once upon a time...</p>
-      <form action="">
+      <form onSubmit={handleSubmit}>
         <label htmlFor="addemoji">What comes next?</label>
         <div id='emojiwrapper'>
           {emojiChoices(signUpEmojis, codedStory, handleChange)}
