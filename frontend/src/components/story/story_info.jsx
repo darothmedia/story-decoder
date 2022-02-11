@@ -3,8 +3,6 @@ import StoryInfo from "../../util/story_info";
 import { connect } from "react-redux";
 import { useParams } from "react-router";
 import { findStory } from "../../actions/story_actions";
-import ContinueStory from "./continue";
-import StartStory from "./write";
 import { Link } from "react-router-dom";
 
 const mSTP = (state) => ({
