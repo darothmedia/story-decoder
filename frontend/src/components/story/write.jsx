@@ -14,7 +14,7 @@ const mDTP = dispatch => ({
   findStory: (storyID) => dispatch(findStory(storyID))
 })
 
-const StartStory = props => {
+const WriteStory = props => {
   const params = useParams()
   const {editStory, currentStory, findStory} = props
   const {storyID} = params
@@ -45,8 +45,13 @@ const StartStory = props => {
 
   return(
     <div className="wrapper" id='startwrapper'>
-      <h1>LETS BEGIN</h1>
-      <p>Our story begins, like many other stories, once upon a time...</p>
+      {currentStory.codedStory.length === 0 ? <div>
+        <h1>LETS BEGIN</h1>
+        <p>Our story begins, like many other stories, once upon a time...</p>
+      </div> : <div>
+        <h1>LETS CONTINUE</h1>
+        <p>Where did we leave off? Oh yes...</p>
+      </div>}
       <form onSubmit={handleSubmit}>
         <label htmlFor="addemoji">What comes next?</label>
         <div id='emojiwrapper'>
@@ -67,4 +72,4 @@ const StartStory = props => {
   )
 }
 
-export default connect(mSTP, mDTP)(StartStory)
+export default connect(mSTP, mDTP)(WriteStory)

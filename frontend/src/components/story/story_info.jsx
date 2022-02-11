@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { useParams } from "react-router";
 import { findStory } from "../../actions/story_actions";
 import ContinueStory from "./continue";
-import StartStory from "./start";
+import StartStory from "./write";
 import { Link } from "react-router-dom";
 
 const mSTP = (state) => ({
@@ -39,14 +39,12 @@ const StoryInfoPage = props => {
     <div className="wrapper" id='storyinfowrapper'>
         <div>
           {StoryInfo(currentStory)} 
-          {currentStory.codedStory.length === 0 ? 
-            <Link to={`/story/${currentStory.storyID}/start`}>
-              <button id='start'>Start</button>
+           
+          <Link to={`/story/${currentStory.storyID}/write`}>
+            {currentStory.codedStory.length === 0 ?
+              <button id='start'>Start</button> : 
+              <button id='continue'>Continue</button> }
             </Link>
-          : <Link to={`/story/${currentStory.storyID}/continue`}>
-              <button id='continue'>Continue</button>
-            </Link>
-          }
         </div>
     </div>
   )

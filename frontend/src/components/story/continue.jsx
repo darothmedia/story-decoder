@@ -1,12 +1,12 @@
 import React from "react";
 import { connect } from "react-redux";
+import { editStory, findStory } from "../../actions/story_actions";
 
 const mSTP = state => ({
 
 })
 
 const mDTP = dispatch => ({
-
 })
 
 const ContinueStory = props => {

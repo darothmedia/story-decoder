@@ -5,7 +5,7 @@ import JoinStory from "./story/join";
 import NavBar from "./navbar";
 import StoryInfoPage from "./story/story_info";
 import SessionForm from "./session/session_form";
-import StartStory from "./story/start";
+import WriteStory from "./story/write";
 import ContinueStory from "./story/continue";
 import React, {useEffect} from "react";
 import { checkCurrent } from "../actions/session_actions";
@@ -29,7 +29,7 @@ const App = props => {
           <Route path='/create' element={<CreateStory />} />
           <Route path='/join' element={<JoinStory />} />
           <Route path='/story/:storyID' element={<StoryInfoPage />} />
-          <Route path='/story/:storyID/start' element={<StartStory />} />
+          <Route path='/story/:storyID/write' element={<WriteStory />} />
           <Route path='/story/:storyID/continue' element={<ContinueStory />} />
           <Route path='/login' element={<SessionForm />} />
         </Routes>
