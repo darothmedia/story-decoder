@@ -3,7 +3,6 @@ import { useParams } from "react-router";
 import { connect } from "react-redux";
 import { emojiChoices, signUpEmojis } from "../../util/emoji_util";
 import { editStory, findStory} from "../../actions/story_actions";
-import { Link } from "react-router-dom";
 
 const mSTP = state => ({
   currentStory: state.entities.stories.currentStory
@@ -52,21 +51,20 @@ const WriteStory = props => {
         <h1>LETS CONTINUE</h1>
         <p>Where did we leave off? Oh yes...</p>
       </div>}
+      {currentStory.codedStory ?
+        <div id='codedstorywrapper'>
+          {currentStory.codedStory.map((emoji, i) => {
+            return (
+              <p key={i}>{emoji}</p>
+            )
+          })}
+        </div> : null}
       <form onSubmit={handleSubmit}>
         <label htmlFor="addemoji">What comes next?</label>
         <div id='emojiwrapper'>
           {emojiChoices(signUpEmojis, codedStory, handleChange)}
         </div>
         {codedStory.selected ? <button onClick={handleSubmit}>Submit</button> : null}
-        <h4>The story so far:</h4>
-        {currentStory.codedStory ? 
-          <div id='codedstorywrapper'>
-            {currentStory.codedStory.map((emoji, i) => {
-              return(
-                <p key={i}>{emoji}</p>
-              )
-            })}
-          </div> : null}
       </form>
     </div>
   )
