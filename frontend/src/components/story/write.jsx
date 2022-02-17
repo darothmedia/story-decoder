@@ -6,7 +6,8 @@ import { editStory, findStory} from "../../actions/story_actions";
 import { searchEmojis } from "../../actions/emoji_actions";
 
 const mSTP = state => ({
-  currentStory: state.entities.stories.currentStory
+  currentStory: state.entities.stories.currentStory,
+  emojis: state.entities.emojis
 })
 
 const mDTP = dispatch => ({
@@ -17,13 +18,14 @@ const mDTP = dispatch => ({
 
 const WriteStory = props => {
   const params = useParams()
-  const {editStory, currentStory, findStory, searchEmojis} = props
+  const {editStory, currentStory, findStory, searchEmojis, emojis} = props
   const {storyID} = params
   const [codedStory, setCodedStory] = useState({
     storyID: storyID,
     emojis: [],
     selected: ""
   })
+  const [searchTerm, setSearchTerm] = useState("")
 
   useEffect(() => {
     if (!currentStory) {
@@ -40,9 +42,13 @@ const WriteStory = props => {
     editStory(codedStory)
   }
 
+  const changeSearch = e => {
+    setSearchTerm(e.target.value)
+  }
+
   const submitSearch = e => {
     e.preventDefault()
-    searchEmojis(e.target.value)
+    searchEmojis(searchTerm)
   }
 
   if (!currentStory) {
@@ -60,8 +66,11 @@ const WriteStory = props => {
       </div>}
       <h2>Search</h2>
       <form onSubmit={submitSearch}>
-        <input type="text" />
+        <input type="text" onChange={changeSearch} />
       </form>
+      {/* {emojis.map((emoji, i) => (
+        <p key={i}></p>
+      ))} */}
       {currentStory.codedStory ?
         <div id='codedstorywrapper'>
           {currentStory.codedStory.map((emoji, i) => {

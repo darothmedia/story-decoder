@@ -25,7 +25,7 @@ export const clearErrors = () => ({
 
 export const searchEmojis = searchTerm => dispatch => 
   EmojiUtil.searchEmojis(searchTerm)
-    .then(emojis => dispatch(receiveEmojis(emojis)),
+    .then(emojis => dispatch(receiveEmojis(emojis.data)),
       errors => dispatch(receiveErrors(errors))
   );
 
