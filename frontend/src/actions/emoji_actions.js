@@ -5,9 +5,10 @@ export const RECEIVE_ERRORS = 'RECEIVE_ERRORS'
 export const CLEAR_EMOJIS = 'CLEAR_EMOJIS'
 export const CLEAR_ERRORS = 'CLEAR_ERRORS'
 
-export const receiveEmojis = emojis => ({
+export const receiveEmojis = (emojis, searchTerm) => ({
   type: RECEIVE_EMOJIS,
-  emojis
+  emojis,
+  searchTerm
 })
 
 export const receiveErrors = errors => ({
@@ -25,7 +26,7 @@ export const clearErrors = () => ({
 
 export const searchEmojis = searchTerm => dispatch => 
   EmojiUtil.searchEmojis(searchTerm)
-    .then(emojis => dispatch(receiveEmojis(emojis.data)),
+    .then((emojis) => dispatch(receiveEmojis(emojis.data, searchTerm)),
       errors => dispatch(receiveErrors(errors))
   );
 

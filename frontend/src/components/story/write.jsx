@@ -68,9 +68,16 @@ const WriteStory = props => {
       <form onSubmit={submitSearch}>
         <input type="text" onChange={changeSearch} />
       </form>
-      {/* {emojis.map((emoji, i) => (
-        <p key={i}></p>
-      ))} */}
+      <div id='codedstorywrapper'>
+        {emojis[searchTerm] ? emojis[searchTerm].map((emoji, j) => (<p key={j}>{emoji.character}</p>)) : null}
+      </div>
+      <form onSubmit={handleSubmit}>
+        <label htmlFor="addemoji">What comes next?</label>
+        <div id='emojiwrapper'>
+          {emojiChoices(signUpEmojis, codedStory, handleChange)}
+        </div>
+        {codedStory.selected ? <button onClick={handleSubmit}>Submit</button> : null}
+      </form>
       {currentStory.codedStory ?
         <div id='codedstorywrapper'>
           {currentStory.codedStory.map((emoji, i) => {
@@ -79,13 +86,6 @@ const WriteStory = props => {
             )
           })}
         </div> : null}
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="addemoji">What comes next?</label>
-        <div id='emojiwrapper'>
-          {emojiChoices(signUpEmojis, codedStory, handleChange)}
-        </div>
-        {codedStory.selected ? <button onClick={handleSubmit}>Submit</button> : null}
-      </form>
     </div>
   )
 }
