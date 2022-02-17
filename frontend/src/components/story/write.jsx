@@ -3,6 +3,7 @@ import { useParams } from "react-router";
 import { connect } from "react-redux";
 import { emojiChoices, signUpEmojis } from "../../util/emoji_util";
 import { editStory, findStory} from "../../actions/story_actions";
+import { searchEmojis } from "../../actions/emoji_actions";
 
 const mSTP = state => ({
   currentStory: state.entities.stories.currentStory
@@ -10,12 +11,13 @@ const mSTP = state => ({
 
 const mDTP = dispatch => ({
   editStory: (storyData) => dispatch(editStory(storyData)),
-  findStory: (storyID) => dispatch(findStory(storyID))
+  findStory: (storyID) => dispatch(findStory(storyID)),
+  searchEmojis: (searchTerm) => dispatch(searchEmojis(searchTerm))
 })
 
 const WriteStory = props => {
   const params = useParams()
-  const {editStory, currentStory, findStory} = props
+  const {editStory, currentStory, findStory, searchEmojis} = props
   const {storyID} = params
   const [codedStory, setCodedStory] = useState({
     storyID: storyID,
@@ -38,6 +40,11 @@ const WriteStory = props => {
     editStory(codedStory)
   }
 
+  const submitSearch = e => {
+    e.preventDefault()
+    searchEmojis(e.target.value)
+  }
+
   if (!currentStory) {
     return null
   }
@@ -51,6 +58,10 @@ const WriteStory = props => {
         <h1>LETS CONTINUE</h1>
         <p>Where did we leave off? Oh yes...</p>
       </div>}
+      <h2>Search</h2>
+      <form onSubmit={submitSearch}>
+        <input type="text" />
+      </form>
       {currentStory.codedStory ?
         <div id='codedstorywrapper'>
           {currentStory.codedStory.map((emoji, i) => {
