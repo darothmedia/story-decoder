@@ -39,13 +39,12 @@ const Search = props => {
 
   return(
     <div className='wrapper' id='searchwrapper'>
-      <h2>Search</h2>
+      <h2>Search for Emojis</h2>
       <form onSubmit={submitSearch}>
         <input type="text" onChange={changeSearch} />
         <button onClick={submitSearch}>Submit</button>
       </form>
         {searchedEmojis()}
-        {/* {emojis[searchTerm] ? emojis[searchTerm].map((emoji, j) => (<p key={j}>{emoji.character}</p>)) : null} */}
     </div>
   )
 }
