@@ -42,15 +42,6 @@ const WriteStory = props => {
     editStory(codedStory)
   }
 
-  const changeSearch = e => {
-    setSearchTerm(e.target.value)
-  }
-
-  const submitSearch = e => {
-    e.preventDefault()
-    searchEmojis(searchTerm)
-  }
-
   if (!currentStory) {
     return null
   }
@@ -64,13 +55,6 @@ const WriteStory = props => {
         <h1>LETS CONTINUE</h1>
         <p>Where did we leave off? Oh yes...</p>
       </div>}
-      <h2>Search</h2>
-      <form onSubmit={submitSearch}>
-        <input type="text" onChange={changeSearch} />
-      </form>
-      <div id='codedstorywrapper'>
-        {emojis[searchTerm] ? emojis[searchTerm].map((emoji, j) => (<p key={j}>{emoji.character}</p>)) : null}
-      </div>
       <form onSubmit={handleSubmit}>
         <label htmlFor="addemoji">What comes next?</label>
         <div id='emojiwrapper'>

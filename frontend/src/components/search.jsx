@@ -13,6 +13,7 @@ const mDTP = dispatch => ({
 const Search = props => {
   const {emojis, searchEmojis} = props
   const [searchTerm, setSearchTerm] = useState("")
+  const [lastSearched, setLastSearched] = useState("")
 
   const changeSearch = e => {
     setSearchTerm(e.target.value)
@@ -20,15 +21,16 @@ const Search = props => {
 
   const submitSearch = e => {
     e.preventDefault()
+    setLastSearched(searchTerm)
     searchEmojis(searchTerm)
   }
 
   const searchedEmojis = () => {
-    if (emojis[searchTerm]) {
+    if (emojis[lastSearched]) {
       return(
-        <div>
-          {Array.isArray(emojis[searchTerm]) ? 
-        emojis[searchTerm].map((emoji, j) => (<p key={j}>{emoji.character}</p>))
+        <div id='codedstorywrapper'>
+          {Array.isArray(emojis[lastSearched]) ? 
+        emojis[lastSearched].map((emoji, j) => (<p key={j}>{emoji.character}</p>))
           : (<p>No emojis found</p>)}
         </div>
       )
@@ -42,10 +44,8 @@ const Search = props => {
         <input type="text" onChange={changeSearch} />
         <button onClick={submitSearch}>Submit</button>
       </form>
-      <div id='codedstorywrapper'>
         {searchedEmojis()}
         {/* {emojis[searchTerm] ? emojis[searchTerm].map((emoji, j) => (<p key={j}>{emoji.character}</p>)) : null} */}
-      </div>
     </div>
   )
 }

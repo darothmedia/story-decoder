@@ -31,6 +31,7 @@ const NavBar = props => {
     <div id="navbarwrapper">
       <section id='leftlinks'>
           <Link to="/"><button>Home</button></Link>
+          <Link to='/search'><button>Search</button></Link>
       </section>
       <section id='rightlinks'>
           {signedInLinks()}
