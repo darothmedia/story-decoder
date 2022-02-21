@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from "react";
 import { connect } from "react-redux";
-import { searchEmojis, getCategories } from "../actions/emoji_actions";
+import { searchEmojis, getCategories, searchByCategory } from "../actions/emoji_actions";
 
 const mSTP = state => ({
   emojis: state.entities.emojis,
@@ -9,13 +9,15 @@ const mSTP = state => ({
 
 const mDTP = dispatch => ({
   searchEmojis: searchTerm => dispatch(searchEmojis(searchTerm)),
-  getCategories: () => dispatch(getCategories())
+  getCategories: () => dispatch(getCategories()),
+  searchByCategory: category => dispatch(searchByCategory(category))
 })
 
 const Search = props => {
-  const {emojis, searchEmojis, getCategories, categories} = props
+  const {emojis, searchEmojis, getCategories, categories, searchByCategory} = props
   const [searchTerm, setSearchTerm] = useState("")
   const [lastSearched, setLastSearched] = useState("")
+  const [selectCat, setSelectCat] = useState("")
 
   useEffect(() => {
     getCategories()
@@ -29,6 +31,16 @@ const Search = props => {
     e.preventDefault()
     setLastSearched(searchTerm)
     searchEmojis(searchTerm)
+  }
+
+  const changeCat = e => {
+    setSelectCat(e.target.value)
+  }
+
+  const submitCat = e => {
+    e.preventDefault()
+    setLastSearched(selectCat)
+    searchByCategory(selectCat)
   }
 
   const searchedEmojis = () => {
@@ -46,7 +58,7 @@ const Search = props => {
   const categoryFill = () => {
     if (categories.length > 0) {
       return(
-        <select name="emojicat" id="emojicat">
+        <select name="emojicat" id="emojicat" onChange={changeCat}>
           {categories.map((category, i) => (
             <option value={category} key={i}>{category}</option>
           ))}
@@ -63,8 +75,9 @@ const Search = props => {
         <button onClick={submitSearch}>Submit</button>
       </form>
       <h2>Or Search By Category</h2>
-      <form>
+      <form onSubmit={submitCat}>
         {categoryFill()}
+        <button onClick={submitCat}>Submit</button>
       </form>
         {searchedEmojis()}
     </div>
