@@ -3,7 +3,8 @@ import { connect } from "react-redux";
 import { searchEmojis, getCategories } from "../actions/emoji_actions";
 
 const mSTP = state => ({
-  emojis: state.entities.emojis
+  emojis: state.entities.emojis,
+  categories: state.entities.categories
 })
 
 const mDTP = dispatch => ({
@@ -12,7 +13,7 @@ const mDTP = dispatch => ({
 })
 
 const Search = props => {
-  const {emojis, searchEmojis, getCategories} = props
+  const {emojis, searchEmojis, getCategories, categories} = props
   const [searchTerm, setSearchTerm] = useState("")
   const [lastSearched, setLastSearched] = useState("")
 
@@ -42,12 +43,28 @@ const Search = props => {
     }
   }
 
+  const categoryFill = () => {
+    if (categories.length > 0) {
+      return(
+        <select name="emojicat" id="emojicat">
+          {categories.map((category, i) => (
+            <option value={category} key={i}>{category}</option>
+          ))}
+        </select>
+      )
+    }
+  }
+
   return(
     <div className='wrapper' id='searchwrapper'>
       <h2>Search for Emojis</h2>
       <form onSubmit={submitSearch}>
         <input type="text" onChange={changeSearch} />
         <button onClick={submitSearch}>Submit</button>
+      </form>
+      <h2>Or Search By Category</h2>
+      <form>
+        {categoryFill()}
       </form>
         {searchedEmojis()}
     </div>
