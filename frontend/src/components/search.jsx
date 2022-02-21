@@ -17,7 +17,6 @@ const Search = props => {
   const {emojis, searchEmojis, getCategories, categories, searchByCategory} = props
   const [searchTerm, setSearchTerm] = useState("")
   const [lastSearched, setLastSearched] = useState("")
-  const [selectCat, setSelectCat] = useState("")
 
   useEffect(() => {
     getCategories()
@@ -34,13 +33,11 @@ const Search = props => {
   }
 
   const changeCat = e => {
-    setSelectCat(e.target.value)
-  }
-
-  const submitCat = e => {
     e.preventDefault()
-    setLastSearched(selectCat)
-    searchByCategory(selectCat)
+    setLastSearched(e.target.value)
+    if (!emojis[e.target.value]) {
+      searchByCategory(e.target.value)
+    }
   }
 
   const searchedEmojis = () => {
@@ -59,6 +56,7 @@ const Search = props => {
     if (categories.length > 0) {
       return(
         <select name="emojicat" id="emojicat" onChange={changeCat}>
+          <option defaultValue="" >Select</option>
           {categories.map((category, i) => (
             <option value={category} key={i}>{category}</option>
           ))}
@@ -75,9 +73,8 @@ const Search = props => {
         <button onClick={submitSearch}>Submit</button>
       </form>
       <h2>Or Search By Category</h2>
-      <form onSubmit={submitCat}>
+      <form>
         {categoryFill()}
-        <button onClick={submitCat}>Submit</button>
       </form>
         {searchedEmojis()}
     </div>
