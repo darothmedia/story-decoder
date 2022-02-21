@@ -30,12 +30,6 @@ export const receiveCategories = categories => ({
   categories
 })
 
-export const categorySearch = (emojis, category) => ({
-  type: RECEIVE_EMOJIS,
-  emojis,
-  category
-})
-
 export const searchEmojis = searchTerm => dispatch => 
   EmojiUtil.searchEmojis(searchTerm)
     .then((emojis) => dispatch(receiveEmojis(emojis.data, searchTerm)),

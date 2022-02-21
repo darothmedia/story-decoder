@@ -7,9 +7,9 @@ const CategoriesReducer = (state = {}, action) => {
       let catarr = []
       action.categories.map((category) => {
         catarr.push(category.slug)
-        category.subCategories.map((subCat) => {
-          catarr.push(subCat)
-        })
+        // category.subCategories.map((subCat) => {
+        //   catarr.push(subCat)
+        // })
       })
       return catarr
     default:
