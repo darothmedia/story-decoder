@@ -6,6 +6,10 @@ export const searchEmojis = searchTerm => (
 )
 
 export const searchByCategory = category => (
-  axios.get(`https://emoji-api.com/categories/${category}&access_key=${emojiKey}`)
+  axios.get(`https://emoji-api.com/categories/${category}?access_key=${emojiKey}`)
+)
+
+export const getCategories = () => (
+  axios.get(`https://emoji-api.com/categories?access_key=${emojiKey}`)
 )
 
