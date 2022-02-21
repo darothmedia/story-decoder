@@ -25,7 +25,7 @@ export const clearErrors = () => ({
   type: CLEAR_ERRORS
 });
 
-export const getCategories = () => ({
+export const receiveCategories = categories => ({
   type: RECEIVE_CATEGORIES,
   categories
 })
@@ -48,7 +48,7 @@ export const searchByCategory = category => dispatch =>
       errors => dispatch(receiveErrors(errors))
     );
 
-export const receiveCategories = () => dispatch =>
+export const getCategories = () => dispatch =>
   EmojiUtil.getCategories()
     .then((categories) => dispatch(receiveCategories(categories.data)),
       errors => dispatch(receiveErrors(errors))

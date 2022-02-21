@@ -1,19 +1,24 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import { connect } from "react-redux";
-import { searchEmojis } from "../actions/emoji_actions";
+import { searchEmojis, getCategories } from "../actions/emoji_actions";
 
 const mSTP = state => ({
   emojis: state.entities.emojis
 })
 
 const mDTP = dispatch => ({
-  searchEmojis: searchTerm => dispatch(searchEmojis(searchTerm))
+  searchEmojis: searchTerm => dispatch(searchEmojis(searchTerm)),
+  getCategories: () => dispatch(getCategories())
 })
 
 const Search = props => {
-  const {emojis, searchEmojis} = props
+  const {emojis, searchEmojis, getCategories} = props
   const [searchTerm, setSearchTerm] = useState("")
   const [lastSearched, setLastSearched] = useState("")
+
+  useEffect(() => {
+    getCategories()
+  }, [getCategories])
 
   const changeSearch = e => {
     setSearchTerm(e.target.value)
