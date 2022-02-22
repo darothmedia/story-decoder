@@ -11,7 +11,7 @@ router.get('/', (req, res) => {
     .catch(err => res.status(400).json(err))
 });
 
-router.get('/:user_id', (req, res) => {
+router.get('/users/:user_id', (req, res) => {
   Story
     .find({creator: req.params.user_id})
     .sort({ date: -1 })

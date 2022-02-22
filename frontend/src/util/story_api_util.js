@@ -11,3 +11,7 @@ export const findStory = storyID => (
 export const editStory = storyData => (
   axios.patch(`/api/stories/${storyData.storyID}/continue`, storyData)
 )
+
+export const findUserStories = userID => (
+  axios.get(`/api/stories/users/${userID}`)
+)
