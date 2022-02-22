@@ -35,7 +35,7 @@ const Search = props => {
   const changeCat = e => {
     e.preventDefault()
     setLastSearched(e.target.value)
-    if (!emojis[e.target.value]) {
+    if (!emojis[e.target.value] && e.target.value !== "Select") {
       searchByCategory(e.target.value)
     }
   }
