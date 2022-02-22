@@ -50,5 +50,5 @@ export const editStory = storyData => dispatch => StoryUtil.editStory(storyData)
 export const findByUser = userID => dispatch => StoryUtil.findUserStories(userID)
   .then(stories => {
     dispatch(receiveStories(stories.data, userID))
-  }, errors => dispatch(receiveErrors(errors.response.data))
+  }, errors => dispatch(receiveErrors(errors.response))
   );
