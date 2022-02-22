@@ -6,7 +6,7 @@ import { editStory, findStory} from "../../actions/story_actions";
 import { searchEmojis } from "../../actions/emoji_actions";
 
 const mSTP = state => ({
-  currentStory: state.entities.stories.currentStory,
+  stories: state.entities.stories,
   emojis: state.entities.emojis
 })
 
@@ -18,20 +18,19 @@ const mDTP = dispatch => ({
 
 const WriteStory = props => {
   const params = useParams()
-  const {editStory, currentStory, findStory, searchEmojis, emojis} = props
+  const {editStory, findStory, stories} = props
   const {storyID} = params
   const [codedStory, setCodedStory] = useState({
     storyID: storyID,
     emojis: [],
     selected: ""
   })
-  const [searchTerm, setSearchTerm] = useState("")
 
   useEffect(() => {
-    if (!currentStory) {
+    if (!stories[storyID]) {
       findStory(storyID)
     }
-  }, [currentStory, findStory, storyID])
+  }, [stories, findStory, storyID])
 
   const handleChange = e => {
     setCodedStory({...codedStory, selected: e.target.value})
@@ -42,13 +41,13 @@ const WriteStory = props => {
     editStory(codedStory)
   }
 
-  if (!currentStory) {
+  if (!stories[storyID]) {
     return null
   }
 
   return(
     <div className="wrapper" id='startwrapper'>
-      {currentStory.codedStory.length === 0 ? <div>
+      {stories[storyID].codedStory.length === 0 ? <div>
         <h1>LETS BEGIN</h1>
         <p>Our story begins, like many other stories, once upon a time...</p>
       </div> : <div>
@@ -62,9 +61,9 @@ const WriteStory = props => {
         </div>
         {codedStory.selected ? <button onClick={handleSubmit}>Submit</button> : null}
       </form>
-      {currentStory.codedStory ?
+      {stories[storyID].codedStory ?
         <div id='codedstorywrapper'>
-          {currentStory.codedStory.map((emoji, i) => {
+          {stories[storyID].codedStory.map((emoji, i) => {
             return (
               <p key={i}>{emoji}</p>
             )
