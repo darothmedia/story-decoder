@@ -11,6 +11,14 @@ router.get('/', (req, res) => {
     .catch(err => res.status(400).json(err))
 });
 
+router.get('/:user_id', (req, res) => {
+  Story
+    .find({creator: req.params.user_id})
+    .sort({ date: -1 })
+    .then(stories => res.json(stories))
+    .catch(err => res.status(400).json(err))
+})
+
 router.get('/:story_id', (req, res) => {
   Story
     .findOne({storyID: req.params.story_id})

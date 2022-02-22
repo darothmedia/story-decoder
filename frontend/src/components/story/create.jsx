@@ -25,7 +25,7 @@ const CreateStory = props => {
 
   const handleSubmit = e => {
     storyData.writers.push(props.currentUser.email)
-    storyData.creator = props.currentUser.email
+    storyData.creator = props.currentUser.id
     storyData.storyID = createID(5)
     for (let i=0; i<storyData.numWriters - 1; i++){
       let idx = `writer${i}`
