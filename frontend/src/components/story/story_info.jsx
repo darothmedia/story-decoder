@@ -4,9 +4,10 @@ import { connect } from "react-redux";
 import { useParams } from "react-router";
 import { findStory } from "../../actions/story_actions";
 import { Link } from "react-router-dom";
+import { Navigate } from "react-router";
 
 const mSTP = (state) => ({
-  currentStory: state.entities.stories.currentStory,
+  stories: state.entities.stories,
   signedIn: state.session.isSignedIn
 })
 
@@ -16,30 +17,31 @@ const mDTP = dispatch => ({
 
 const StoryInfoPage = props => {
   const params = useParams()
-  const {currentStory, findStory, signedIn} = props
+  const {stories, findStory, signedIn} = props
   const {storyID} = params
 
-  // if (!signedIn) {
-  //   <Navigate to='/' />
-  // }
-
   useEffect(() => {
-    if (!currentStory) {
+    if (!stories[storyID]) {
       findStory(storyID)
     }
-  }, [currentStory, findStory, storyID])
+  }, [stories, findStory, storyID])
 
-  if (!currentStory) {
+  if (signedIn === false) {
+    return(
+      <Navigate to='/' />
+    )
+  }
+
+  if (!stories[storyID]) {
     return null
   }
 
   return(
     <div className="wrapper" id='storyinfowrapper'>
         <div>
-          {StoryInfo(currentStory)} 
-           
-          <Link to={`/story/${currentStory.storyID}/write`}>
-            {currentStory.codedStory.length === 0 ?
+          {StoryInfo(stories[storyID])} 
+          <Link to={`/story/${storyID}/write`}>
+            {stories[storyID].codedStory.length === 0 ?
               <button id='start'>Start</button> : 
               <button id='continue'>Continue</button> }
             </Link>

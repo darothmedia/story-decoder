@@ -8,7 +8,6 @@ import SessionForm from "../session/session_form";
 const mSTP = state => ({
   signedIn: state.session.isSignedIn,
   currentUser: state.session.currentUser,
-  currentStory: state.entities.stories.currentStory,
   stories: state.entities.stories
 })
 
@@ -61,7 +60,7 @@ const CreateStory = props => {
     )
   } 
 
-  if (props.currentStory) {
+  if (props.stories[storyData.storyID]) {
     return(
       <Navigate to={`/story/${storyData.storyID}`} />
     )
