@@ -3,9 +3,11 @@ import { connect } from "react-redux";
 import { useParams } from "react-router";
 import { Navigate } from "react-router";
 import { findByUser } from "../../actions/story_actions";
+import { Link } from "react-router-dom";
 
 const mSTP = state => ({
-  currentUser: state.session.currentUser
+  currentUser: state.session.currentUser,
+  stories: state.entities.stories
 })
 
 const mDTP = dispatch => ({
@@ -14,7 +16,7 @@ const mDTP = dispatch => ({
 
 const Profile = props => {
   const params = useParams()
-  const {currentUser, findUserStories} = props
+  const {currentUser, findUserStories, stories} = props
   useEffect(() => {
     findUserStories(params.userID)
   }, [])
@@ -24,10 +26,14 @@ const Profile = props => {
       <Navigate to='/' />
     )
   }
-  
+
   return(
-    <div>
+    <div className="wrapper" id='profilewrapper'>
       <h1>Hello, {currentUser.emoji}</h1>
+      <h2>Your Stories:</h2>
+      {stories[params.userID] ? stories[params.userID].map((story, i) => (
+        <Link to={`/story/${story.storyID}`} key={i}><button>{story.title}</button></Link>
+      )) : null}
     </div>
   )
 }
