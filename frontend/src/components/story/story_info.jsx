@@ -16,9 +16,8 @@ const mDTP = dispatch => ({
 })
 
 const StoryInfoPage = props => {
-  const params = useParams()
   const {stories, findStory, signedIn} = props
-  const {storyID} = params
+  const {storyID} = useParams()
 
   useEffect(() => {
     if (!stories[storyID]) {
