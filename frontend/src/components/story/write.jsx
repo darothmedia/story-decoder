@@ -17,9 +17,8 @@ const mDTP = dispatch => ({
 })
 
 const WriteStory = props => {
-  const params = useParams()
   const {editStory, findStory, stories} = props
-  const {storyID} = params
+  const {storyID} = useParams()
   const [codedStory, setCodedStory] = useState({
     storyID: storyID,
     emojis: [],
