@@ -12,8 +12,7 @@ const mSTP = state => ({
 
 const mDTP = dispatch => ({
   editStory: (storyData) => dispatch(editStory(storyData)),
-  findStory: (storyID) => dispatch(findStory(storyID)),
-  searchEmojis: (searchTerm) => dispatch(searchEmojis(searchTerm))
+  findStory: (storyID) => dispatch(findStory(storyID))
 })
 
 const WriteStory = props => {
@@ -22,7 +21,8 @@ const WriteStory = props => {
   const [codedStory, setCodedStory] = useState({
     storyID: storyID,
     emojis: [],
-    selected: ""
+    selected: "",
+    decoded: ""
   })
 
   useEffect(() => {
@@ -32,7 +32,10 @@ const WriteStory = props => {
   }, [stories, findStory, storyID])
 
   const handleChange = e => {
-    setCodedStory({...codedStory, selected: e.target.value})
+    setCodedStory({...codedStory, 
+      selected: e.target.value,
+      decoded: e.target.id
+    })
   }
 
   const handleSubmit = e => {
